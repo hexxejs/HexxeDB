@@ -1,0 +1,188 @@
+<style local>
+ #login input {
+     margin-bottom: 10px; 
+     font-size: 16px;
+     width: 80%;
+     padding-top: 10px; 
+     padding-bottom: 10px;
+ } 
+ 
+  #signin input {
+     margin-bottom: 10px; 
+     font-size: 16px;
+     width: 80%;
+     padding-top: 10px; 
+     padding-bottom: 10px;
+ } 
+</style>
+
+<hexxe>
+<button onclick="toggle('#login'); toggle('#signin'); toggle('#upsign'); toggle('#insign')" page-middle-h bold theme="night shadow" size="18px">
+<p margin="0" theme="smart" id="upsign">Create Account</p> 
+<p margin="0" theme="smart" hidden id="insign">Sign In To Existing</p>
+</button>
+<br>
+<div id="login" center>
+<form id="log">
+
+</form>
+
+</div>
+
+
+<div hidden id="signin" center>
+<form id="sign">
+
+</form>
+</div>
+
+</hexxe>
+
+    
+<script local>
+const logIn = newHexForm([
+{input: "true", id: "lemail", theme: "light shadow", name:"email", type: "email", placeholder: "example@gmail.com"},
+{input: "true", id: "lpass", theme: "light shadow", name:"password", type: "password", placeholder: "password"},
+{input: "true", theme: "smart", type: "submit", size: "20px", value: "Sign In"}
+
+]);
+ 
+logIn('#log');
+
+const signIn = newHexForm([
+{input: "true", id: "suser", theme: "light shadow", name:"name", type: "username", placeholder: "username"},
+{input: "true", id: "semail", theme: "light shadow", name:"email", type: "email", placeholder: "example@gmail.com"},
+{input: "true", id: "spass", theme: "light shadow", name:"password", type: "password", placeholder: "password"},
+{input: "true", id: "skey", hidden: "true", theme: "light shadow", name:"key", type: "key", value: makeid(20)},
+{input: "true", theme: "smart", type: "submit", size: "20px", value: "Sign Up"}
+]);
+ 
+signIn('#sign');
+
+const hexForm = rootHexForm({
+name: { required: true },
+email: { required: true },
+password: { required: true }
+});
+
+
+hexForm('#log'); 
+hexForm('#sign');
+
+
+function logUp() {
+const loader = document.createElement("img");
+loader.src = "asset/loader.gif";
+loader.style.width = "100px"; 
+document.getElementById('log').appendChild(loader);
+let pass = document.getElementById('lpass').value;
+let email = document.getElementById('lemail').value; 
+let path = "https://hexxe.000webhostapp.com/sign.php?meth=in&pass="+pass+"&email="+email;
+path = path.replace(/#/g, 'haesh'); 
+
+let urlParts = path.split('?');
+  
+  if (urlParts.length > 1) {
+    let baseUrl = urlParts[0];
+    let queryParams = urlParts[1].split('&');
+    
+    for (let i = 0; i < queryParams.length; i++) {
+      let paramParts = queryParams[i].split('=');
+      
+      if (paramParts.length > 1) {
+        paramParts[1] = encodeURIComponent(paramParts[1]);
+        queryParams[i] = paramParts.join('=');
+      }
+    }
+   
+    let path = baseUrl + '?' + queryParams.join('&');
+    } else {}
+
+
+fetch(path).then(function(response) { response.text().then(function(text) {
+let data = text; 
+if(data == "invalid") {
+alert("Invalid Login")    
+} else {
+localStorage.setItem("xqlpass", data); 
+console.log(`Your passkey is ${data}`);
+setTimeout(function(){
+history.go(0);
+}, 1000); 
+}
+loader.remove();
+}); }).catch(error => {
+    // Handle fetch failure
+    alert('Poor Network Connection. Refresh Page');
+  });     
+}
+
+
+
+function SignUp() {
+const loader = document.createElement("img");
+loader.src = "/asset/loader.gif";
+loader.style.width = "100px"; 
+document.getElementById('sign').appendChild(loader);
+let pass = document.getElementById('spass').value;
+let email = document.getElementById('semail').value;
+let key = document.getElementById('skey').value;
+let user = document.getElementById('suser').value;
+let path = "https://hexxe.000webhostapp.com/sign.php?meth=up&pass="+pass+"&email="+email+"&key="+key+"&name="+user;
+path = path.replace(/#/g, 'haesh');
+let urlParts = path.split('?');
+  
+  if (urlParts.length > 1) {
+    let baseUrl = urlParts[0];
+    let queryParams = urlParts[1].split('&');
+    
+    for (let i = 0; i < queryParams.length; i++) {
+      let paramParts = queryParams[i].split('=');
+      
+      if (paramParts.length > 1) {
+        paramParts[1] = encodeURIComponent(paramParts[1]);
+        queryParams[i] = paramParts.join('=');
+      }
+    }
+   
+    let path = baseUrl + '?' + queryParams.join('&');
+    } else {}
+
+
+
+fetch(path).then(function(response) { response.text().then(function(text) {
+let data = text; 
+if(data !== "success") {
+alert(data)    
+} else {
+localStorage.setItem("xqlpass", key);
+console.log(`Your passkey is ${key}`); 
+setTimeout(function(){
+history.go(0);
+}, 1000); 
+}
+loader.remove();
+}); }).catch(error => {
+    // Handle fetch failure
+    alert('Poor Network Connection. Refresh Page');
+  });    
+}
+
+
+
+
+
+document.getElementById('log').onsubmit = function(ele) {
+    ele.preventDefault();
+    logUp();
+}
+
+
+document.getElementById('sign').onsubmit = function(ele) {
+    ele.preventDefault();
+    SignUp();
+}
+
+
+$IMPORT('@UI')
+</script>

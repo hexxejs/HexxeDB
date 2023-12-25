@@ -1,0 +1,40 @@
+table {
+  border-collapse: collapse;
+  display: block;
+}
+.xtabs, td {
+ font-family: 'Outfit';   
+margin: 0px;
+
+}
+th {
+    font-family: 'Rubik';
+}
+td, th, .xtabs {
+  border: 1px solid #dddddd;
+  text-align: left;
+  max-width: 120px;
+  word-wrap: wrap;
+  height: 40px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 5px 10px;
+}
+
+textarea {
+    height: 100px;
+    overflow: scroll;
+}
+
+#xql {
+    width: auto;
+    white-space: nowrap; 
+    display: flex; 
+}
+
+#nullql {
+    color: red;
+}
+
+.is-hidden { display: none; }
+

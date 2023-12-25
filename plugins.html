@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <title>Plugins | XQL</title>
+<link rel="stylesheet" href="hex.css">
+<script src="xcon.js"></script>
+<script src="hex.js?v=1.110"></script>
+<script src="query.js?v=1.0"></script>
+<script src="que.js?v=1.0"></script>
+
+</head>
+<body>
+<style>
+    .mode {
+        font-size: 25px;
+        width: 35px; 
+        height: 35px; 
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        border: 0.1px solid black;
+        border-radius: 50%;
+    }
+    #navhead {
+        color: black;
+    }
+    #header-nav {
+       color: black;
+    }
+    
+
+</style>
+<div id="nav"></div>
+<br><br>
+
+<input font="Outfit"  theme="shadow light" style="margin: 10px 0px 0px 10px; border: 0.5px purple solid; width: 250px; height: 35px; font-size: 16px; border-radius: 10px;" placeholder="Find Plugins..."
+  type="search" 
+  oninput="liveSearch()" 
+  id="searchbox"> 
+
+
+
+
+<p font="Poppins" size="20px" bold>Plugins</p>
+<div flex id="box" style="white-space: nowrap; overflow: scroll">
+<div class="cards" id="song" relative width="160px"> 
+    
+<img border="grey 1px solid" onclick="location.href='plug.html?id=$pass';" style="border-radius:12px" src="$logo" radius="7px" width="125px" ratio="1/1" loading="lazy">
+  
+<div block width="160px"> <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; margin: 0px 0 0px 0; font-family: 'Poppins'; font-size: 17px; font-weight: 600;" opacity="0.75"><i class="fa fa-$itype"></i>&nbsp;$name</p></div>
+
+<button theme="smart" onclick="hexPop('$pass')" back="#f4e8f7">Info <i class="fa fa-exclamation-circle"></i></button>
+ </div> 
+
+<div $pop> 
+<div width="98%" page-middle-h> 
+<img border="grey 1px solid" onclick="location.href='plus?id=$pass';" style="border-radius:12px" src="$logo" radius="7px" width="125px" ratio="1/1" loading="lazy">
+
+<p margin="2px top" size="17px" font="Rubik" bold>$name</p>
+
+<p margin="-1px top" size="16px" font="Outfit">
+
+$bio    
+    
+</p>
+</div>
+</div>
+</div>
+
+<br> 
+
+
+
+<script>
+$IMPORT('Nav: nav.hex?v=<?php echo(rand()); ?>');
+$START('logs'); 
+document.getElementById('nav').Component('Nav');
+
+$IMPORT('@UI');
+
+const $con = "Ju2nPjkTtoSVjSq1FowB"; 
+const $db = "plugins"; 
+
+
+
+const box = document.getElementById('box'); 
+const boxdata = box.innerHTML; 
+box.innerHTML = ""; 
+
+$QUERY($con, $db, 'SELECT plugins').pull(boxer); 
+function boxer(data) {
+let full = data.length; 
+let count = 0; 
+for(let i = 0; i < data.length; i++) {
+count++; 
+data[i]['logo'] = xqlurl + "/files/" + $con + "/" + data[i]['logo'];
+if(data[i]['type'] == "tool") {
+data[i]['itype'] = "gear"; 
+data[i]['pop'] = `pop="${data[i]['pass']} USE plugin.html?id=${data[i]['pass']}"`; 
+
+} else {
+data[i]['itype'] = "hammer";   
+data[i]['pop'] = `pop="${data[i]['pass']}"`; 
+}
+
+let config = data[i]['config']; 
+data[i]['name'] = pConfig(config, 'name'); 
+data[i]['author'] = pConfig(config, 'author'); 
+data[i]['bio'] = pConfig(config, 'desc'); 
+
+
+
+
+
+
+
+if(count == full) {
+    acT();
+}
+} 
+function acT() {
+let fun = loop(data, boxdata);
+box.innerHTML = fun;
+rootHex();
+}
+}
+    
+    
+function nightM()  {
+ document.body.style.background = 'black';
+ document.body.style.color = 'white'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "night");
+}  
+
+function dayM()  {
+ document.body.style.background = 'white';
+ document.body.style.color = 'black'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "day");
+}  
+
+
+let currmode = localStorage.getItem("modex");   
+setTimeout(function() {
+if(currmode == "day") {   
+document.getElementById('modes').click(); 
+toggle('#modes');
+ toggle('#moden');
+}   
+
+if(currmode == "night") {   
+document.getElementById('moden').click(); 
+} 
+}, 500);  
+
+
+
+
+ 
+ 
+  
+   
+  function liveSearch() {
+  let cards = document.querySelectorAll('.cards');
+  let card = document.querySelectorAll('.cardname'); 
+  let search_query = document.getElementById("searchbox").value;
+  for (var i = 0; i < cards.length; i++) {
+    if(cards[i].innerText.toLowerCase()
+      .includes(search_query.toLowerCase())) {
+        cards[i].classList.remove("is-hidden");
+    } else {
+      cards[i].classList.add("is-hidden");
+    }
+  }
+} 
+
+
+  
+function pConfig(config, data) {
+    try {
+let string = config; 
+string = $encode(nl2br(string));
+let author = ""; let desc = ""; let name = ""; let version = ""; let license = ""; 
+
+let fauth = string.match(/\*\*Authors*\s*:(.+?)\*\*/); 
+if(fauth) {
+author = fauth[1]; 
+}
+let fdesc = string.match(/\*\*Description\s*:(.+?)\*\*/); 
+if(fdesc) {
+desc = fdesc[1]; 
+}
+
+let fname = string.match(/\*\*Name\s*:(.+?)\*\*/); 
+if(fname) {
+name = fname[1]; 
+}
+
+let fver = string.match(/\*\*Version\s*:(.+?)\*\*/); 
+if(fver) {
+version = fver[1]; 
+}
+
+let flie = string.match(/\*\*License\s*:(.+?)\*\*/); 
+if(flie) {
+license = flie[1]; 
+}
+
+if(data == "name"){
+    return name; 
+}
+
+if(data == "author"){
+    return author; 
+}
+
+if(data == "version"){
+    return version; 
+}
+
+if(data == "license"){
+    return license; 
+}
+
+if(data == "desc"){
+    return desc; 
+}
+
+    
+    } catch(error) {
+       alert(error);
+    }   
+}  
+
+  
+  
+  
+  
+
+</script>

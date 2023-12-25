@@ -1,0 +1,40 @@
+<style local>
+    
+    #header-nav {
+        padding-top: 5px;
+    }
+    </style >
+<hexxe>
+     <nav logo="asset/icon.png" type="header" name="<div style='display: flex; align-items: center; color: black; font-weight: 700'>XQL <i style='color: #ff411d; margin-top: 3px; margin-right: 30px; font-size: 30px; font-weight: 800'></i><i id='moden' onclick='nightM()' class='fa fa-moon mode' color='black'></i><i hidden id='modes' onclick='dayM()' color='orange' class='fa fa-sun mode'></i></div>">
+     <br>
+<div center width="100%"> 
+<p size="20px" onclick="location.href='index.html';" font="Outfit">Databases <i size="25px" class="fa fa-code-branch"> </i> 
+</p>
+<hr>   
+<p size="20px" onclick="location.href='files.html';" font="Outfit">File Manager <i size="25px" class="fa fa-folder"> </i> 
+</p>
+<hr>
+<p size="20px" onclick="location.href='plugins.html';" font="Outfit">Plugins <i size="25px" class="fa fa-tools"> </i> 
+</p>
+<hr>       
+<p size="20px" onclick="location.href='user.html';" font="Outfit">Account <i size="25px" class="fa fa-user"> </i> 
+</p>
+<hr>      
+<p size="20px" link="https://hexql.vercel.app _blank" font="Outfit">Docs <i size="25px" class="fa fa-code"> </i> 
+</p>
+<hr>      
+<p size="20px" onclick="localStorage.removeItem('xqlpass'); location.href='index.html';" font="Outfit">Logout <i size="25px" color="red" class="fa fa-power-off"> </i> 
+</p>
+<br><br>
+<p font="Outfit" opacity="0.7"> XQL Version 1.0</p> 
+
+</div>
+         
+     
+     </nav>
+</hexxe>
+
+<script local>
+
+$IMPORT('@UI');
+</script>

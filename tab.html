@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="hex.css">
+<script src="xcon.js" crossorigin="anonymous"></script>
+<script src="hex.js?v=1.01"></script>
+<script src="tab.js?v=1.0"></script>
+<title>XQL | Database</title>     
+</head>
+<body>
+<style>
+    .mode {
+        font-size: 25px;
+        width: 35px; 
+        height: 35px; 
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        border: 0.1px solid black;
+        border-radius: 50%;
+    }
+    #navhead {
+        color: black;
+    }
+    #header-nav {
+       color: black;
+    }
+    td, th, .xtabs {
+     height: 25px !important;   
+    }
+</style>
+<div id="nav"></div> 
+ 
+ <br><br><br>
+ 
+<div>  
+ <input type="file" hidden id="infile">
+<p margin="0" font="Rubik" bold size="20px">
+<size up="5"><i class="fa fa-folder"></i></size> Database: <in id="name"></in> &nbsp; <button onclick="document.getElementById('infile').click();" padding="2px,10px" theme="smart">Import <i class="fa fa-upload"></i></button>
+</p>   
+</div>
+<br>
+<div>
+ <input id="addql" height="35px" width="150px" size="17px" font="Poppins" radius="6px" placeholder="Add table...">
+<button id="plusql" onclick="addRowQl()" theme="night shadow" size="17px">Add</button>
+ </div>
+
+
+<div>
+ <p id="nobase" font="Poppins" size="16px" bold>
+You have not created a table 
+</p> 
+
+<br>
+<div style="width: 100%; overflow: scroll">
+<div id="xql">
+<img src="asset/loader.gif" width="100px">
+</div>
+</div> 
+
+
+</div>
+ 
+ <div pop="delql">
+<div width="90%" page-middle center>
+  
+<p id="delwarn" bold size="20px">Are You Sure You Want To Delete This Row (<in id="delrow"></in>)?</p>  
+
+<button theme="smart" width="80%" size="22px" id="delbt">Delete</button>
+</center>    
+</div>
+
+<script>
+$IMPORT('Nav: nav.hex');
+
+let passkey = localStorage.getItem("xqlpass");
+
+document.getElementById('nav').Component('Nav');
+window.onload = refQL;
+function nightM()  {
+ document.body.style.background = 'black';
+ document.body.style.color = 'white'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "night");
+}  
+
+function dayM()  {
+ document.body.style.background = 'white';
+ document.body.style.color = 'black'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "day");
+}  
+
+
+
+document.getElementById('name').innerText = tabed;   
+function refQL() {
+let path = xqlurl+"/gettab.php?key="+passkey+"&tab="+tabed+"&sess="+makeid(5); 
+
+
+    
+    
+fetch(path).then(function(response) { response.text().then(function(text) {
+
+let data = text; 
+hexql = [];
+data = data.match(/[^,\s"]+/g) || [];
+data.forEach(function(use) {
+hexql.push(use);    
+})
+
+console.log(hexql)
+formQL(); 
+}); }).catch(error => {
+    // Handle fetch failure
+    alert('Poor Network Connection. Refresh Page');
+  });;
+
+}
+  
+    
+
+
+
+$IMPORT('@UI');
+$START('logs');
+denUp()
+
+let currmode = localStorage.getItem("modex");   
+setTimeout(function() {
+if(currmode == "day") {   
+document.getElementById('modes').click(); 
+toggle('#modes');
+ toggle('#moden');
+}   
+
+if(currmode == "night") {   
+document.getElementById('moden').click(); 
+} 
+}, 500);  
+
+
+
+
+const fileInput = document.getElementById('infile');
+
+fileInput.addEventListener('change', function(event) {
+  const selectedFile = event.target.files[0];
+
+  if (selectedFile) {
+    const reader = new FileReader();
+
+    reader.onload = function(fileEvent) {
+      const fileContent = fileEvent.target.result;
+    
+      console.log(fileContent);
+ const match = fileContent.match(/TABLE\((.*?)\) DATA\$ini(.*?)\$ini/s);
+
+if (match) {
+  const tname = match[1];
+  const late = hexql.filter(item => item == tname); 
+  if(late == "") {
+  hexql.push(tname); 
+ 
+const loader = document.createElement("img");
+loader.src = "https://hexjs.vercel.app/Sum/files/loader.gif";
+loader.id = "impload";
+loader.style.width = "100px"; 
+document.getElementById('xql').appendChild(loader);      
+      
+ let xhr = new XMLHttpRequest();
+   let data = match[2];
+  data = encodeURIComponent(data)
+  
+let url = 'https://hexxe.000webhostapp.com/newrow.php';
+let params = "sess=x8g08&key="+passkey+"&name="+data+"&tab="+tname+"&row="+tabed;
+
+xhr.open("POST", url, true);
+
+xhr.onload = () => {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+            let datar = xhr.response;
+            if (datar.includes("success")) {
+
+console.log(datar); 
+
+alert("Table Imported Successfully");
+refQL();
+document.getElementById('impload').remove();
+
+
+
+         
+            } else {
+                 alert(datar);   
+}
+ }
+        }    
+};
+
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.send(params);      
+      
+      
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  } else {
+
+alert(`Query Error: Table "${tname}" exists`)  
+   
+}       
+    
+} 
+
+}
+    reader.readAsText(selectedFile);
+  }
+});
+</script>
+
+</body>

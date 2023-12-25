@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Plugin | XQL</title>
+<link rel="stylesheet" href="hex.css">
+<script src="xcon.js"></script>
+<script src="hex.js?v=1.10"></script>
+<script src="query.js?v=1.0"></script>
+<script src="que.js?v=1.0"></script>
+
+</head>
+<body margin="0">
+<style>
+        .mode {
+        font-size: 25px;
+        width: 35px; 
+        height: 35px; 
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        border: 0.1px solid black;
+        border-radius: 50%;
+    }
+    #navhead {
+        color: black;
+        margin-left: 0px !important;
+    }
+    #header-nav {
+       color: black;
+    }
+    
+</style>
+<div id="nav"></div>
+<br><br>
+
+<button id="saved" display="none" color="green" bold margin="7px,160px,0,0" index="9" fixed push="top right" size="20px" back="none" noborder><i class="fa fa-check"></i></button>
+
+<update id="upd" relative data="plugins" call="saveD()" table="plugins" query="pass = $js-$GET('id')">
+<form>
+<textarea fixed flow="scroll" push="bottom" spellcheck="false" font="outfit" padding="20px,10px" style="height: calc(100vh - 180px); width: calc(100% - 20px)" name="config" id="body"></textarea> 
+<input padding="4px,10px,4px,10px" margin="4px,70px,0,0" index="9" fixed push="top right" type="submit" theme="smart" size="17px" value="Update">
+</form>
+</update>
+<br><br>
+
+<script>
+    
+$IMPORT('Nav: nav.hex?v=88');
+$START('logs'); 
+document.getElementById('nav').Component('Nav');
+
+$IMPORT('@UI');
+$START('XQL:Ju2nPjkTtoSVjSq1FowB');
+const $con = "Ju2nPjkTtoSVjSq1FowB"; 
+const $db = "plugins";
+
+const plug = $GET('id');
+if(plug !== null) {
+    getD();
+}
+
+
+function getD() {
+$QUERY($con, $db, `SELECT plugins WHERE pass = '${plug}'`).pull(plugIn)
+}
+function plugIn(data) {
+row = data[0];
+let file = row['config']; 
+let currkey = row['currkey']; 
+let curr = localStorage.getItem('xqlpass'); 
+if(curr == currkey) {
+file = $encode(nl2br(file));
+document.getElementById('body').value = file;
+} else {
+document.getElementById('upd').innerText = "Unauthorized User";
+}
+
+    
+}
+
+function $encode(str) {
+let string = str.replace(/”/g, '"');
+string = string.replace(/’/g, "'");
+return string;
+}
+
+function nl2br(str) {
+    return str.replace(/\\n/g, '\n'); 
+}
+
+function saveD() {
+show('#saved'); 
+getD();
+setTimeout(function() {
+ hide('#saved');
+}, 3000); 
+    
+}
+
+function nightM()  {
+ document.body.style.background = 'black';
+ document.body.style.color = 'white'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "night");
+}  
+
+function dayM()  {
+ document.body.style.background = 'white';
+ document.body.style.color = 'black'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "day");
+}  
+
+
+let currmode = localStorage.getItem("modex");   
+setTimeout(function() {
+if(currmode == "day") {   
+document.getElementById('modes').click(); 
+toggle('#modes');
+ toggle('#moden');
+}   
+
+if(currmode == "night") {   
+document.getElementById('moden').click(); 
+} 
+}, 500);  
+
+
+
+
+</script>   
+    
+    
+    
+</body>

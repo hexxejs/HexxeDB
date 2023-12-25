@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="index.css?v=shp">
+<link rel="stylesheet" href="hex.css">
+<script src="xcon.js" crossorigin="anonymous"></script>
+<script src="hex.js?v=1.02"></script>
+
+<title>Table - XQL DB</title>     
+</head>
+<body>
+    <style>
+    .mode {
+        font-size: 25px;
+        width: 35px; 
+        height: 35px; 
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        border: 0.1px solid black;
+        border-radius: 50%;
+    }
+    #navhead {
+        color: black;
+    }
+    #header-nav {
+       color: black;
+    }
+    
+    #td {
+        max-height: 100px !important;
+        overflow: scroll !important;
+    }
+</style>
+ <div id="nav"></div>
+ <br><br><br>
+ <div>  
+<p margin="0" font="Rubik" bold size="20px">
+<size up="5"><i class="fa fa-table"></i></size> Table : <in id="name"></in> &nbsp; 
+<button margin="10px top" onclick="exPort();" padding="2px,10px" theme="smart">Export <i class="fa fa-download"></i></button>
+<select style="display: none" id="deck" margin="10px left" padding="2px,10px" theme="smart">
+ 
+</select>
+
+</p>   
+</div>
+<br>
+<div flex-wrap style="align-items: center">
+ <select size="17px" font="Poppins" radius="6px" id="seltab" width="80px" height="40px" noborder>
+    
+</select>&nbsp;&nbsp;
+<input id="searchql" height="40px" width="150px" size="17px" font="Poppins" radius="6px" type="search" placeholder="find value...">
+&nbsp; &nbsp;<button margin="10px top" padding="2px,7px,2px,7px" width="80px" onclick="saveN()" left theme="night shadow" flex style="align-items: center" size="20px"><size down="1">Save </size>&nbsp;<i class="fa fa-save"></i></button>
+</div>
+<br>
+<div flex>
+<button onclick="toggle('#addsec');" theme="night shadow" flex style="align-items: center" size="20px"><size down="1">Field </size>&nbsp;&nbsp;+</button>  &nbsp; &nbsp;
+<button onclick="addRabQL()" theme="night shadow" flex style="align-items: center" size="20px"><size down="1">Row </size>&nbsp;&nbsp;+</button> &nbsp; &nbsp;
+<button onclick="refResh()" theme="night shadow" flex style="align-items: center" size="20px"><size down="1">Refresh </size>&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+</div>
+<br>
+<div hidden id="addsec">
+<input id="addql" height="35px" width="150px" size="17px" font="Poppins" radius="6px" placeholder="Add field...">
+<button id="plusql" onclick="addRowQl()" theme="night shadow" size="17px">Add</button>
+  
+</div>
+<br>
+<div flex>
+
+<p hidden id="declare" width="98%" page-middle-h size="16px" font="Outfit" margin="0 top" color="red"><in back="#fafafa" padding="5px">Table Records Updated Successfully</in><br></p>
+
+</div>
+<p hidden back="#fafafa" width="96%" page-middle-h size="16px" font="Outfit" id="squ" margin="0 top" padding="3px,5px" color="#fd751f"><br></p>
+
+<div style="width: 100%; overflow: scroll;">
+<div style="padding-right: 40px;" id="xql"><img src="asset/loader.gif" width="100px" />
+</div>
+</div> 
+<br>   
+ 
+<div pop="delql CANCEL">
+<div width="90%" page-middle center>
+  
+<p id="delwarn" bold size="20px">Are You Sure You Want To Delete This Row (<in id="delrow"></in>)?</p>  
+
+<button theme="smart" width="80%" size="22px" id="delbt">Delete</button>
+</div>
+<script src="table.js?v=perilios"></script>    
+
+
+
+<script>
+document.getElementById('nav').Component('Nav');
+let passkey = localStorage.getItem("xqlpass");
+
+document.getElementById('addql').addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("plusql").click();
+  }
+});
+
+
+window.addEventListener('beforeunload', function (e) {
+if (savestat == "unsaved") {
+const Mess = 'Are you sure you want to leave? You have unsaved changes';
+e.returnValue = Mess;
+return Mess; 
+    }
+});
+
+let selectElement = document.getElementById("deck");
+
+selectElement.addEventListener("change", function() {
+  // Access the selected option
+  let selectedOption = selectElement.options[selectElement.selectedIndex];
+
+  let top = selectedOption.id;
+if(deck !== top) {
+ location.href = "table.html?tab="+tabed+"&row="+tabe+"&deck="+top;
+}
+  console.log("Selected option ID: " + selectedOptionId);
+});
+
+
+
+
+
+function refResh() {
+    
+
+if (savestat == "unsaved" && confirm('Are you sure you want to refresh? You have unsaved changes')) {
+refQL(); 
+ }
+   
+}
+
+function saveN() {
+newQL(); 
+}
+
+const searchQL = document.getElementById('searchql');
+searchQL.addEventListener('search', function() {
+      xqlFind();
+    });
+    
+    
+searchQL.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    xqlFind();
+  }
+});
+
+    
+    searchQL.addEventListener('keyup', function() {
+    if(searchQL.value == "") {
+      xqlFind();
+      document.getElementById('squ').hide();
+      }
+    });    
+
+
+document.getElementById('name').innerText = tabe+"/"+tabed; 
+window.onload = refQL;
+
+function refQL() {
+
+let pathb = xqlurl+"/getrow.php?key="+passkey+"&tab="+tabed+"&row="+tabe+"&sess="+makeid(5); 
+
+
+
+fetch(pathb).then(function(response) { response.text().then(function(text) {
+
+let data = text;
+hexql = []; 
+if(data == "") {
+data = `[{"Name":"null"}]`;
+}
+if(data == "[]") {
+data = `[{"Name":"null"}]`;    
+}
+data = JSON.parse(data);
+hexql.length = 0;
+hexql.push(...data); 
+
+let total = hexql.length;
+if(total > 50) {
+show('#deck'); 
+}
+let ceil = total / 50; 
+ceil = Math.ceil(ceil);
+
+
+deck = parseInt(deck);
+let base = deck * 50; 
+let neck = deck + 1;
+neck = neck * 50; 
+if(neck > total){
+    neck = total; 
+}
+
+
+let rele = document.createElement("option"); 
+rele.id = deck; 
+rele.value = base + " - " + neck;
+rele.innerHTML = base + " - " + neck; 
+document.getElementById('deck'). appendChild(rele); 
+
+
+for(let i = 0; i < ceil; i++) {
+ if(i == deck) {} else {
+let bane = i * 50; 
+let tot = i + 1;
+tot = tot * 50;
+if(tot > total) {
+ tot = total; 
+}
+    
+let cele = document.createElement("option"); 
+cele.id = i; 
+cele.value = bane + " - " + tot;
+cele.innerHTML = bane + " - " + tot; 
+document.getElementById('deck'). appendChild(cele); 
+}
+}
+
+
+
+
+
+formXQL();
+
+    
+}); }).catch(error => {
+    // Handle fetch failure
+    alert('Poor Network Connection. Refresh Page');
+  });
+
+}
+function nightM()  {
+ document.body.style.background = 'black';
+ document.body.style.color = 'white'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "night");
+}  
+
+function dayM()  {
+ document.body.style.background = 'white';
+ document.body.style.color = 'black'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "day");
+}  
+
+
+
+let currmode = localStorage.getItem("modex");   
+setTimeout(function() {
+if(currmode == "day") {   
+document.getElementById('modes').click(); 
+toggle('#modes');
+ toggle('#moden');
+}   
+
+if(currmode == "night") {   
+document.getElementById('moden').click(); 
+} 
+}, 500);  
+
+
+
+$IMPORT('@UI')
+</script>
+
+</body>

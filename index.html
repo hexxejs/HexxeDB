@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="hex.css">
+<script src="xcon.js"></script>
+<script src="hex.js?v=1.1"></script>
+<script src="index.js?v=1.0"></script>
+<title>XQL | Database</title>     
+</head>
+<body>
+<style>
+    .mode {
+        font-size: 25px;
+        width: 35px; 
+        height: 35px; 
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        border: 0.1px solid black;
+        border-radius: 50%;
+    }
+    #navhead {
+        color: black;
+    }
+    #header-nav {
+       color: black;
+    }
+</style>
+<div id="nav"></div> 
+ 
+ <br><br><br>
+ 
+<div id="docs"></div>
+ 
+
+<script>
+$IMPORT('Nav: nav.hex');
+$IMPORT('Log: login.hex'); 
+$IMPORT('Home: home.hex?v=191'); 
+
+
+function nightM()  {
+ document.body.style.background = 'black';
+ document.body.style.color = 'white'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "night");
+}  
+
+function dayM()  {
+ document.body.style.background = 'white';
+ document.body.style.color = 'black'; 
+ toggle('#modes');
+ toggle('#moden');
+ localStorage.setItem("modex", "day");
+}  
+
+
+   
+document.getElementById('nav').Component('Nav');
+
+let passkey = localStorage.getItem("xqlpass");
+if(passkey == null) {
+document.getElementById('docs').Component('Log');
+} else {
+document.getElementById('docs').Component('Home'); 
+console.log(`Your passkey is ${passkey}`);
+setTimeout(denUp, 500); 
+}
+
+
+
+function refQL() {
+let pathb = xqlurl+"/getdb.php?key="+passkey;
+fetch(pathb).then(function(response) { response.text().then(function(text) {
+
+let data = text; 
+hexql = [];
+
+data = data.match(/[^,\s"]+/g) || [];
+data.forEach(function(use) {
+hexql.push(use);    
+})
+
+console.log(hexql)
+formQL(); 
+}); }).catch(error => {
+    // Handle fetch failure
+    alert('Poor Network Connection. Refresh Page');
+  });;  
+
+
+
+}
+
+
+
+$IMPORT('@UI');
+$START('logs')
+
+let currmode = localStorage.getItem("modex");   
+setTimeout(function() {
+if(currmode == "day") {   
+document.getElementById('modes').click(); 
+toggle('#modes');
+ toggle('#moden');
+}   
+
+if(currmode == "night") {   
+document.getElementById('moden').click(); 
+} 
+}, 500); 
+
+</script>
+
+</body>

@@ -1,0 +1,60 @@
+<style>
+    </style>
+<hexxe>
+<div>  
+<p margin="0" font="Rubik" bold size="20px">
+Hello <in id="name"></in> <size up="5">&#x1F44B;</size>
+</p>   
+</div>
+<br>
+<div>
+ <input id="addql" height="35px" width="150px" size="17px" font="Poppins" radius="6px" placeholder="Add Database...">
+<button id="plusql" onclick="addRowQl()" theme="night shadow" size="17px">Add</button>
+ </div>
+
+
+<div>
+ <p id="nobase" font="Poppins" size="16px" bold>
+You have not created a database. 
+</p> 
+
+<br>
+<div style="width: 100%; overflow: scroll">
+<div id="xql">
+<img src="asset/loader.gif" width="100px">
+</div>
+</div> 
+
+
+</div>
+
+
+<div pop="delql">
+<div width="90%" page-middle center>
+  
+<p id="delwarn" bold size="20px">Are You Sure You Want To Delete This Row (<in id="delrow"></in>)?</p>  
+
+<button theme="smart" width="80%" size="22px" id="delbt">Delete</button>
+</center>    
+</div>
+</hexxe>
+
+
+<script local>
+    
+  
+ 
+    
+let path = xqlurl+"/auth/name.php?key="+passkey; 
+fetch(path).then(function(response) { response.text().then(function(text) {
+let data = text; 
+document.getElementById('name').innerText = data;
+}); });   
+    
+    
+refQL(); 
+
+  
+    
+$IMPORT('@UI');     
+</script>
