@@ -215,7 +215,29 @@ align-items: center;
 }
 
 
+.blinker:after {
+    content: "";
+        display: inline;
+    color: inherit; 
+    padding-right: 3px;
+    display: inline;
+    
+    border-right: white 5px solid; 
+   background: inherit; 
+   animation: blink 0.7s infinite;  
+}
+.blinker {
+position: relative; 
+}
 
+@keyframes blink {
+  0%, 100% {
+   opacity: 1;
+  }
+  50% {
+  opacity: 0;
+  }
+}
 .marquee {
   width: 100%;
   display: block;
