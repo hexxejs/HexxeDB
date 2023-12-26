@@ -79,7 +79,11 @@ let ogput = outdata.innerHTML;
 qparam.style.display = 'none';
 
 const forPat = new RegExp(`{\\s*(.*?)\\s*}`, 'g');
-const match = string.match(/SELECT (\w+)/);
+
+let match = string.match(/SELECT (\w+)/);
+if(!match) {
+ match = string.match(/ALL (\w+)/);
+}
 if (match) {
   const dataSelector = match[1];
   let conditionSelector = ""; 
@@ -90,6 +94,12 @@ const wmatch = string.match(/WHERE (\w+) = '([^']+)'/);
 if(wmatch){
 conditionSelector = wmatch[1];
 conditionValue = wmatch[2];
+if(conditionValue.includes("$js-")) {
+let cond = conditionValue.split('$js-').pop();
+conditionValue = eval(cond);
+ }
+
+
 mtype = "where";
 }
 }  
@@ -99,338 +109,14 @@ const wmatch = string.match(/REGEX (\w+) = '([^']+)'/);
 if(wmatch){
 conditionSelector = wmatch[1];
 conditionValue = wmatch[2];
-mtype = "regex";
-}
-}  
 
-
-
-
-
-
-let hexql = [];
-
-let path = xqlget+"?key="+xqlacc+"&tab="+dataSelector+"&row="+db+"&sess="+makeid(5); 
-
-
-
-fetch(path).then(function(response) { response.text().then(function(text) {
-
-let data = text;
-if(data == "") {
-query.remove();
-console.log(`No result for query, "${string}"`);
-} else {
-
-data = JSON.parse(data);
-hexql.length = 0;
-hexql.push(...data);
-    
-  
-  
-const dataVal = hexql; 
-
-let getData;  
-if(mtype == "null") {
-getData = dataVal;
-}
-
-if(mtype == "where") {
-getData = dataVal.filter(item => item[conditionSelector] === conditionValue);
-}
-
-
-
-
-if(mtype == "regex") {
-getData = dataVal.filter(item => item[conditionSelector].includes(conditionValue));
-}
-
-
-
- let selectedData = "";   
-if(conditionSelector == "Key") {
-let fLen = dataVal.length - 1; 
-
-if(conditionValue == "first") {
-    selectedData = dataVal.filter(function(obj, index){
-return index === 0;
-});    
-} else if(conditionValue == "last") {
- selectedData = dataVal.filter(function(obj, index){
-return index === fLen;
-});       
-} else {
-let cVal = parseInt(conditionValue) - 1;
-selectedData = dataVal.filter(function(obj, index){
-return index === cVal;
-});
-}
-
+if(conditionValue.includes("$js-")) {
+let cond = conditionValue.split('$js-').pop();
+conditionValue = eval(cond);
+ }
  
- 
-} else {
-  
-
-selectedData = getData;
-}
 
 
-let result;
-
-
-let output;
-
-output = outdata.innerHTML;
-
-let thedex = "0";
-
-
-function upsQ() {
-thedex = "0";
-addVal = output.replace(forPat, function (match, captureKey) {
-if(captureKey == "Key") {
-if(selectedData && selectedData[0]) {
-result = dataVal.findIndex(item => item === selectedData[0]);
-result = result + 1;
-}         
-} else {
-if(selectedData && selectedData[0] && selectedData[0].hasOwnProperty(captureKey)) {
-result = selectedData[0][captureKey];
-
-
-if(string.includes("AND")) {
-let andf = string.match(/AND (\w+) = '([^']+)'/); 
-if(andf) {
-let andkey = andf[1]; 
-andkey = andkey.trim();
-let andval = andf[2];
-andval = andval.trim();
-thislove = selectedData[0][andkey];
-if(thislove == andval) {
-} else {
-    result = "";
-}
-}
-}
-    
-
-
-
-
-
-
-
-}
-else { result = ""; }}
-
-if(result == "null"  || result === null || result === undefined || result == "") {
-result = "";
-}
-return result;
-});
-
-}
-
-
-if(string.includes("ORDER")) {
-const orpA = string.match(/ORDER (\w+)/); 
-if(orpA)  {
-orpVal = orpA[1]; 
-if(orpVal == "DESC") {
-let oneDex = selectedData.length - 1;
-thedex = oneDex;
-addVal = output.replace(forPat, function (match, captureKey) {
-if(captureKey == "Key") {
-if(selectedData && selectedData[oneDex]) {
-result = dataVal.findIndex(item => item === selectedData[oneDex]);
-result = result + 1;
-}         
-} else {
-if(selectedData && selectedData[oneDex] && selectedData[oneDex].hasOwnProperty(captureKey)) {
-result = selectedData[oneDex][captureKey];
-
-if(string.includes("AND")) {
-let andf = string.match(/AND (\w+) = '([^']+)'/); 
-if(andf) {
-let andkey = andf[1]; 
-andkey = andkey.trim();
-let andval = andf[2];
-andval = andval.trim();
-thislove = selectedData[oneDex][andkey];
-if(thislove == andval) {
-} else {
-    result = "";
-}
-}
-}
-    
-
-
-
-
-
-}
-else { result = ""; }}
-if(result == "null"  || result === null || result === undefined || result == "") {
-
-result = "";
-}
-return result;
-});
-
-    
-} else {
-upsQ();     
-}
-} else {
- upsQ();   
-}
-} else {
-    upsQ();
-}
-
-let thisVal = addVal;
-
-let qregex = /!!\s*if\s*\[\[([^\]]*)\]\]\s*\[\[([^\]]*)\]\]\s*(.*?)\s*!!/g;
-
-
-let resultString = "";
-let lastIndex = 0;
-
-let qmatch;
-while ((qmatch = qregex.exec(thisVal)) !== null) {
-  let ask = qmatch[1];
-  let content = qmatch[2];
-  let elsecon = qmatch[3];
-  let elsem = elsecon.match(/else\s*\[\[([^\]]*)\]\]\s*/);
-  let elsec = "";
-  if(elsem) {
-    elsec = elsem[1];  
-  } else {
-    elsec = "";
-  }
-  
-  let pkey; let pval; let ptype = "eq";
-  if(ask.includes("&gt;")) {
-  ptype = "more"; 
-  pkey = ask.split("&gt;")[0].trim();
-  pval = ask.split("&gt;").pop().trim();
-  pval = parseInt(pval);
-  
-  } else if(ask.includes("&lt;")) {
-  ptype = "less"; 
-  pkey = ask.split("&lt;")[0].trim();
-  pval = ask.split("&lt;").pop().trim();
-  pval = parseInt(pval);
-  
-  }
-  else {
-  pkey = ask.split("==")[0].trim();
-  pval = ask.split("==").pop().trim();
-  if(pval.includes("$$")) {
-  pval = pval.split("$$").pop().trim(); 
-  pval = eval(pval);
-  if(pval == undefined || pval == null) {
-   pval = "";
-  }
-  }
-  }
-  let rval;
-  if (pkey == "Key") {
-    rval = result + 1;
-  } else {
-    rval = selectedData[thedex][pkey];
-  }
-
-if(ptype == "less") {
- rval = parseInt(rval); 
-   if (rval < pval) {
-    resultString += thisVal.substring(lastIndex, qmatch.index) + content;
-  } else {
-    resultString += thisVal.substring(lastIndex, qmatch.index) + elsec;
-  }
-} else if(ptype == "more") {
-rval = parseInt(rval); 
-  if (rval > pval) {
-    resultString += thisVal.substring(lastIndex, qmatch.index) + content;
-  } else {
-    resultString += thisVal.substring(lastIndex, qmatch.index);
-  }
-} else {
-  if (rval == pval) {
-    resultString += thisVal.substring(lastIndex, qmatch.index) + content;
-  } else {
-    resultString += thisVal.substring(lastIndex, qmatch.index);
-  }
-} 
-  
-  
-  
-
-  lastIndex = qmatch.index + qmatch[0].length;
-}
-
-resultString += thisVal.substring(lastIndex);
-
-thisVal = resultString;
-
-    
-    
-
-
-
-
-
-if(origin !== undefined) { 
-let oridata = document.querySelector(origin);
-oridata.innerHTML = thisVal; 
-oridata.value = thisVal; 
-oridata.show();
-query.remove();
-    
-    
-} else {
-query.innerHTML = thisVal; 
-query.show(); 
-}
-
-if(call !== undefined) {
-    eval(call);
-}          
-let endTime = performance.now();
-const executionTime = endTime - startTime;
-const roundExTime = executionTime.toFixed(2);
-console.log(`XQL QUERIED: ${roundExTime} milliseconds`);
-
-}
-
-
-}); });
-
-}
-else { 
-
-const match2 = string.match(/ALL (\w+)/);
-if (match2) {
-  const dataSelector = match2[1];
-  let conditionSelector = ""; 
-  let conditionValue = "";
-  let mtype = "null";
-if(string.includes("WHERE")) {
-const wmatch = string.match(/WHERE (\w+) = '([^']+)'/);
-if(wmatch){
-conditionSelector = wmatch[1];
-conditionValue = wmatch[2];
-mtype = "where";
-}
-}  
-  
-if(string.includes("REGEX")) {
-const wmatch = string.match(/REGEX (\w+) = '([^']+)'/);
-if(wmatch){
-conditionSelector = wmatch[1];
-conditionValue = wmatch[2];
 mtype = "regex";
 }
 }  
@@ -737,5 +423,5 @@ console.log(`XQL COMPILED: ${roundExTime} milliseconds`);
 else { 
   console.log("Invalid string format");
 }
-}
+
 }
