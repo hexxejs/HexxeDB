@@ -163,6 +163,12 @@ exeLogs();
 }
 if(bundle.includes("XQL")) {
   let key = bundle.split("XQL:").pop();
+  let que = document.createElement("script"); 
+  que.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/que.js";
+  document.head.appendChild(que);
+  let query = document.createElement("script"); 
+  query.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/query.js";
+  document.head.appendChild(query);
     INIXQL(key);
     formInQL();
     upInQL();
