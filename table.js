@@ -235,7 +235,10 @@ for (const key in row) {
 if (row.hasOwnProperty(key)) {  
 const ogtab = "xql"+key;
 let value = row[key];
+if (typeof value === 'number' && !isNaN(value)) {  } else {
+    
 let vyid = value.replace(/\s/g, '');
+}
 const paramrow = document.createElement("tr");
    
 let getab = document.getElementById(ogtab); 
@@ -250,7 +253,11 @@ paramin.setAttribute("field", key);
 paramin.setAttribute("row", rowTab); 
 paramin.setAttribute("ondblclick", "newXQL(this)"); 
 paramin.classList.add("xtabs", "pat", "tabql"+eachTab);
+if (typeof value === 'number' && !isNaN(value)) {
+paramin.innerText = value;
+} else {    
 paramin.innerText = value.replace(/\\n/g, "\n"); 
+}
 paramrow.appendChild(paramin);
 
 
