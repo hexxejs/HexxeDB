@@ -133,7 +133,10 @@ function refResh() {
 
 if (savestat == "unsaved" && confirm('Are you sure you want to refresh? You have unsaved changes')) {
 refQL(); 
- }
+ } else if(savestat == "saved") {
+refQL();
+}
+    
    
 }
 
