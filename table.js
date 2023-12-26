@@ -205,8 +205,8 @@ ogrow.innerHTML = "<p class='tabql"+eachTab+" xtabs' id='Key"+eachTab+"'> <i cla
         
 } else if (row.hasOwnProperty(rowname)) { 
 let cypher = row[rowname]; 
-    alert(cypher);
-if (typeof cypher === 'number' && !isNaN(cypher)) { alert('nim'); } else {
+    
+if (typeof cypher === 'number' && !isNaN(cypher)) {  } else {
 let cyid = cypher.replace(/\s/g, ''); }
 if(cypher == "") {
 cypher = 'null'; 
@@ -215,7 +215,11 @@ ogrow.style.opacity = '0.5';
 if(cypher == "null") {
 ogrow.style.opacity = '0.5';
 }
+if (typeof cypher === 'number' && !isNaN(cypher)) {
+ogin.innerText = cypher;
+} else {       
 ogin.innerText = cypher.replace(/\\n/g, "\n"); 
+}
 ogrow.appendChild(ogin);
 } else {
 ogin.innerText = "null"; 
