@@ -205,7 +205,8 @@ ogrow.innerHTML = "<p class='tabql"+eachTab+" xtabs' id='Key"+eachTab+"'> <i cla
         
 } else if (row.hasOwnProperty(rowname)) { 
 let cypher = row[rowname]; 
-let cyid = cypher.replace(/\s/g, ''); 
+    if (!isNaN(cypher)) { } else {
+let cyid = cypher.replace(/\s/g, ''); }
 if(cypher == "") {
 cypher = 'null'; 
 ogrow.style.opacity = '0.5';  
