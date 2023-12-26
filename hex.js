@@ -164,10 +164,10 @@ exeLogs();
 if(bundle.includes("XQL")) {
   let key = bundle.split("XQL:").pop();
   let que = document.createElement("script"); 
-  que.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/que.js";
+  que.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/que.js";
   document.head.appendChild(que);
   let query = document.createElement("script"); 
-  query.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/query.js";
+  query.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/query.js";
   document.head.appendChild(query);
     INIXQL(key);
     formInQL();
@@ -2905,11 +2905,11 @@ hexxer = document.querySelector(target);
 hexxer = document;
 } 
 const sumicon = document.createElement('script');
-sumicon.src= 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/xcon.js'; 
+sumicon.src= 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/xcon.js'; 
 const sumcss = document.createElement('link');
 sumcss.rel = 'stylesheet';
 sumcss.type = 'text/css';
-sumcss.href = 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/hex.css';
+sumcss.href = 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/hex.css';
 const popcss = document.createElement('link');
 popcss.rel = 'stylesheet';
 popcss.type = 'text/css';
@@ -3185,7 +3185,69 @@ charIndex++;
 
 
 
+ // Get all elements with the tag name "type"
+  const typeElements = document.getElementsByTagName('type');
 
+  // Iterate through each "type" element
+  Array.from(typeElements).forEach((typeElement) => {
+  if(typeElement.getAttribute("parsed") == "true") {} else {
+  const blink = typeElement.getAttribute('noblink');
+  
+    const words = typeElement.getAttribute('word').split(' ');
+    let wordIndex = 0;
+    let charIndex = 0;
+    const speed = typeElement.hasAttribute('speed') ? parseInt(typeElement.getAttribute('speed')) : 100;
+    
+    const wait = typeElement.hasAttribute('wait') ? parseInt(typeElement.getAttribute('wait')) : 500; 
+    
+    
+
+    // Create a new p element for typing
+    const typewriterElement = document.createElement('in');
+   typewriterElement.classList.add('typewriter');
+ 
+ 
+ typeElement.appendChild(typewriterElement);
+ typeElement.setAttribute("parsed", "true"); 
+ 
+if(blink == undefined) {
+const blinkerElement = document.createElement('span');
+blinkerElement.classList.add('blinker');
+typeElement.appendChild(blinkerElement);  
+
+ typeElement.style.display = "inline-flex";
+ typeElement.style.setProperty("align-items", "center");   
+}
+    function type() {
+      if (charIndex < words[wordIndex].length) {
+        typewriterElement.textContent += words[wordIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(type, speed); // Use provided speed or default to 1000 milliseconds
+      } else {
+       setTimeout(function() {
+        setTimeout(erase, speed);
+        }, wait); // Use provided speed or default to 1000 milliseconds
+      }
+    }
+
+    function erase() {
+      if (charIndex > 0) {
+        typewriterElement.textContent = words[wordIndex].substring(0, charIndex - 1);
+        charIndex--;
+        setTimeout(erase, speed); // Use provided speed or default to 1000 milliseconds
+      } else {
+        wordIndex = (wordIndex + 1) % words.length;
+        
+        setTimeout(type, 500); // Pause before typing the next word
+      }
+    }
+
+    // Start the typing animation
+    type();    
+    
+  }  
+    
+  });
 
 
 
