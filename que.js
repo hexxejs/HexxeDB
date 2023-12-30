@@ -71,15 +71,38 @@ xhr.onload = () => {
 let data = xhr.response;
 if (data.includes("success")) {
 
-console.log("Job Creation Success");
+console.log("Mail Sent Successfully");
 if(call !== undefined) {
-let newFunc = new Function(call); 
-newFunc.call(this);
+
+if(typeof killer === 'function') {
+ 
+call();
+
+} else {
+ let newFunc = new Function(call); 
+newFunc.call(this);   
+
+}   
 }
 
             } else {
 if(error !== undefined) {              
-error(data); 
+kill = "Error: " + data; 
+if(typeof error === 'function') {
+ if(error.length === 0) {
+     error(); 
+ } else {  
+    
+error(kill);
+
+}
+
+ 
+} else {
+
+let newFun = new Function(error); 
+newFun.call(this);
+}   
 
 }
             }
