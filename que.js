@@ -38,9 +38,62 @@ xhr.send(params);
  
  
      
-alert(email + ": " + date + ": " + body);  
+
+    
+    
+    } catch (err) { 
+  
+if(error !== undefined) {              
+error(err); 
+
+}
 
 
+    }    
+    
+}
+
+
+function Mailer(to, from, head, body, call, error) {
+    try {
+       
+let xhr = new XMLHttpRequest();
+let url = xqlurl + '/mailer.php?sess=' + makeid(5);
+let params = "sess="+makeid(5)+"&body="+encodeURIComponent(body)+"&to="+encodeURIComponent(to)+"&from="+encodeURIComponent(from)+"&head="+encodeURIComponent(head)+"&date="+encodeURIComponent(date);
+
+
+
+xhr.open("POST", url, true);
+
+xhr.onload = () => {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+let data = xhr.response;
+if (data.includes("success")) {
+
+console.log("Job Creation Success");
+if(call !== undefined) {
+let newFunc = new Function(call); 
+newFunc.call(this);
+}
+
+            } else {
+if(error !== undefined) {              
+error(data); 
+
+}
+            }
+        }
+    }
+};
+
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.send(params);
+
+
+ 
+ 
+     
 
     
     
