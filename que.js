@@ -59,7 +59,7 @@ function Mailer(to, from, head, body, call, error) {
        
 let xhr = new XMLHttpRequest();
 let url = xqlurl + '/mailer.php?sess=' + makeid(5);
-let params = "sess="+makeid(5)+"&body="+encodeURIComponent(body)+"&to="+encodeURIComponent(to)+"&from="+encodeURIComponent(from)+"&head="+encodeURIComponent(head)+"&date="+encodeURIComponent(date);
+let params = "sess="+makeid(5)+"&body="+encodeURIComponent(body)+"&to="+encodeURIComponent(to)+"&from="+encodeURIComponent(from)+"&head="+encodeURIComponent(head);
 
 
 
