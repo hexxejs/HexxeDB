@@ -205,9 +205,14 @@ ogrow.innerHTML = "<p class='tabql"+eachTab+" xtabs' id='Key"+eachTab+"'> <i cla
         
 } else if (row.hasOwnProperty(rowname)) { 
 let cypher = row[rowname]; 
-    
+ let cyid = cypher;    
 if (typeof cypher === 'number' && !isNaN(cypher)) {  } else {
-let cyid = cypher.replace(/\s/g, ''); }
+try {
+ cyid = cypher.replace(/\s/g, '');
+} catch(error) {
+    cyid = cypher; 
+}
+}
 if(cypher == "") {
 cypher = 'null'; 
 ogrow.style.opacity = '0.5';  
@@ -217,8 +222,12 @@ ogrow.style.opacity = '0.5';
 }
 if (typeof cypher === 'number' && !isNaN(cypher)) {
 ogin.innerText = cypher;
-} else {       
+} else {    
+ try{   
 ogin.innerText = cypher.replace(/\\n/g, "\n"); 
+ } catch(error) {
+ogin.innerText = cypher; 
+ }
 }
 ogrow.appendChild(ogin);
 } else {
@@ -235,9 +244,13 @@ for (const key in row) {
 if (row.hasOwnProperty(key)) {  
 const ogtab = "xql"+key;
 let value = row[key];
+    let vyid = value; 
 if (typeof value === 'number' && !isNaN(value)) {  } else {
-    
-let vyid = value.replace(/\s/g, '');
+  try {  
+vyid = value.replace(/\s/g, '');
+  } catch(error) {
+      vyid = value; 
+  }
 }
 const paramrow = document.createElement("tr");
    
@@ -255,9 +268,13 @@ paramin.setAttribute("ondblclick", "newXQL(this)");
 paramin.classList.add("xtabs", "pat", "tabql"+eachTab);
 if (typeof value === 'number' && !isNaN(value)) {
 paramin.innerText = value;
-} else {    
+} else {  
+    try{
 paramin.innerText = value.replace(/\\n/g, "\n"); 
-}
+    } catch(error) {
+paramin.innerText = value; 
+    }
+    }
 paramrow.appendChild(paramin);
 
 
