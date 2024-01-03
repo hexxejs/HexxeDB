@@ -476,7 +476,9 @@ hexql.forEach(function(oval) {
 delete oval[key];
 });
 hexPop('delql');
-newQL(); 
+savestat = "unsaved";  
+formXQL(); 
+    
 }
 
 
@@ -510,7 +512,8 @@ hexql.length = 0
 hexql.push(...data);       
 }
 hexPop('delql'); 
-newQL();
+savestat = "unsaved";  
+formXQL();
 let quarp = "DELETE "+tabed+" WHERE Key = '"+code+"'"; 
 document.getElementById('squ').innerHTML = quarp; 
 document.getElementById('squ').style.display = 'block';
