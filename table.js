@@ -429,7 +429,10 @@ xhr.send(params);
 function newXQL(el) {
 let elem = el;
 let field = elem.getAttribute('field'); 
-let row  = elem.getAttribute('row');
+let row  = elem.getAttribute('row'); 
+row = parseInt(row);
+let onit = deck * 50; 
+row = row + onit; 
 let head = "bill"; 
 let fh = elem.getAttribute('head'); 
 if(fh !== null) {
