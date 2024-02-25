@@ -507,6 +507,8 @@ document.getElementById('delbt').setAttribute('onclick', 'kickQL("'+key+'", "las
 
 function kickQL(code, act) {
 let key = parseInt(code) - 1;
+let cla = deck * 50; 
+key = cla + key;
 hexql.splice(key, 1);
 if(act == "last") {
 data = `[{"Name":"null"}]`;    
