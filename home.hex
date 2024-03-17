@@ -3,7 +3,7 @@
 <hexxe>
 <div>  
 <p flex margin="0" font="Rubik" bold size="20px">
-Hello <name id="name"></name> <size up="5">&#x1F44B;</size>
+Hello&nbsp;<name id="name"></name>&nbsp;<size up="5">&#x1F44B;</size>
 </p>   
 </div>
 <br>
