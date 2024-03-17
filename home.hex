@@ -2,7 +2,7 @@
     </style>
 <hexxe>
 <div>  
-<p margin="0" font="Rubik" bold size="20px">
+<p flex margin="0" font="Rubik" bold size="20px">
 Hello <in display="inline" id="name"></in> <size up="5">&#x1F44B;</size>
 </p>   
 </div>
