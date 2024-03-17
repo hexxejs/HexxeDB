@@ -176,7 +176,7 @@ document.getElementById('xql').appendChild(loader);
    let data = match[2];
   data = encodeURIComponent(data)
   
-let url = 'https://hexxe.000webhostapp.com/newrow.php';
+let url = xqlurl+'/newrow.php';
 let params = "sess=x8g08&key="+passkey+"&name="+data+"&tab="+tname+"&row="+tabed;
 
 xhr.open("POST", url, true);
