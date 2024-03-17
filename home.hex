@@ -48,7 +48,7 @@ You have not created a database.
 let path = xqlurl+"/auth/name.php?key="+passkey+"&sess="+makeid(8); 
 fetch(path).then(function(response) { response.text().then(function(text) {
 let data = text; 
-document.getElementById('name').innerText = data;
+document.getElementById('name').innerText = data.trim();
 }); });   
     
     
