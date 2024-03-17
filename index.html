@@ -75,7 +75,7 @@ setTimeout(denUp, 500);
 
 
 function refQL() {
-let pathb = xqlurl+"/getdb.php?key="+passkey;
+let pathb = xqlurl+"/getdb.php?key="+passkey+"&sess="+makeid(8);
 fetch(pathb).then(function(response) { response.text().then(function(text) {
 
 let data = text; 
