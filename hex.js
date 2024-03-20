@@ -1258,6 +1258,7 @@ xlogs.push(new Error().stack.split('\n')[2].trim() + ` Imported ${moduleName} fr
 }
 
 HTMLElement.prototype.Component = Component;
+HTMLElement.prototype.Xporter = Xporter;
 
 function Depend(mod) {
 const name = mod.trim();
@@ -1337,6 +1338,65 @@ $IMPORT(data)
 
 }
 
+function Xporter(mod) {
+if(mod !== undefined) {
+const path = mod;
+elem = this; 
+if(path == "none") {
+this.innerHTML = "";
+} else {
+fetch(path).then(function(response) { response.text().then(function(text) {
+let data = text;
+let regexx = /{ this\.route\.(\w+) }/;
+
+// Use replace with a callback function to replace the matched content
+
+data = data.replace(regexx, function (match, captureGroup) {
+ 
+ return getRouteInfo(allRoute, captureGroup);
+});
+
+
+var parser = new DOMParser();
+var doc = parser.parseFromString(data, 'text/html');
+var rMarkUp = doc.querySelector('hexxe');
+if(rMarkUp)  {
+data = rMarkUp.innerHTML;    
+ } else {
+data = "";
+ }
+elem.innerHTML = data;
+
+
+var rScript = doc.getElementsByTagName('script'); 
+for(var i = 0; i < rScript.length;i++) {
+const rScripter = rScript[i];
+const hasApp = hasAttr(rScripter, 'local');if(hasApp == true){
+
+const nScripter = document.getElementsByTagName("script");
+
+
+let parseScript = rScripter.textContent;
+eval(parseScript); 
+
+}}
+
+var rStyle = doc.getElementsByTagName('style'); 
+for(var i = 0; i < rStyle.length;i++) {
+const rStyler = rStyle[i];
+const hasSty = hasAttr(rStyler, 'local');if(hasSty == true){
+
+const nStyler = document.createElement("style");
+nStyler.textContent = rStyler.textContent;
+document.head.appendChild(nStyler);
+
+}
+}
+}); });
+}
+}
+
+}
 
 
 
