@@ -28,6 +28,93 @@ return hexget;
 }
 
 
+function PopTell(elem) {
+let element = document.querySelectorAll(elem);
+if(element) {
+element.forEach(function(row){
+row.style.display = 'block'; 
+setTimeout(function(){
+row.style.display = 'none';
+}, 2200);
+}); 
+}
+} 
+
+function dState(elem) {
+let element = document.querySelector(elem); 
+const displayState = window.getComputedStyle(element).getPropertyValue('display');
+return displayState; 
+}
+
+function vState(elem) {
+let element = document.querySelector(elem); 
+const displayState = window.getComputedStyle(element).getPropertyValue('visibility');
+return displayState; 
+}
+
+
+function checkData(url) {
+  try {
+      
+    if (url == "" || url == undefined || url == null || url == "null") {
+      return false;  
+    } else {
+      return true; 
+    }
+  } catch (error) {
+    return false;
+  }
+}
+
+function copyText(element, call) {
+  let temp = document.createElement("input");
+  document.body.append(temp);
+  temp.value = document.querySelector(element).innerText;
+  temp.select();
+  document.execCommand("copy");
+  temp.remove();
+  if(call !== undefined) {
+  let newFunc = new Function(call);
+  newFunc.call(this);
+  }
+}
+
+
+function timeDiff(startTime, unit) {
+    const startDate = new Date(startTime);
+    const currentDate = new Date();
+
+    const timeDifference = currentDate - startDate;
+
+    switch (unit) {
+        case "d":
+            return Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Difference in days
+        case "h":
+            return Math.floor(timeDifference / (1000 * 60 * 60)); // Difference in hours
+        case "m":
+            return Math.floor(timeDifference / (1000 * 60)); // Difference in minutes
+        default:
+            return "Invalid unit";
+    }
+}
+
+
+function parseDate(dateString, format) {
+  const formats = {
+    'D/M/Y': { year: 'numeric', month: 'long', day: 'numeric' },
+    'D/m/Y': { year: 'numeric', month: 'short', day: 'numeric' },
+    'D/M/y': { year: '2-digit', month: 'long', day: 'numeric' },
+    'M': { month: 'long' },
+    'M/D/Y': { year: 'numeric', month: 'long', day: 'numeric' },
+  };
+
+  if (formats[format]) {
+    return new Date(dateString).toLocaleDateString('en-US', formats[format]);
+  } else {
+    return 'Invalid format';
+  }
+}
+
 function inText(targ, val) {
 let target = document.querySelectorAll(targ);
 if(target) {
@@ -82,6 +169,156 @@ target.forEach(function(ele) {
 ele.setAttribute(name, val);
 });     
 }   
+}
+HTMLElement.prototype.addListener = function(type, usage) {
+if(type == 'press') {
+let  element = this;
+let pressTimer;
+
+element.addEventListener('touchstart', function(e) {
+pressTimer = window.setTimeout(function() {
+usage(); 
+    }, 500);
+});
+
+element.addEventListener('touchend', function(e) {
+clearTimeout(pressTimer);
+});
+
+element.addEventListener('mousedown', function(e) {
+pressTimer = window.setTimeout(function() {
+usage();
+    }, 500);
+});
+
+element.addEventListener('mouseup', function(e) {
+clearTimeout(pressTimer);
+});   
+
+    
+}
+
+if(type == 'leave') {
+let element = this; 
+element.addEventListener('touchend', function(e) {
+usage(); 
+});   
+
+    
+element.addEventListener('mouseup', function(e) {
+usage();   
+});   
+
+
+
+}
+}
+
+
+
+function $upload(formData, call, killer) {
+let kill;
+try{    
+formData.append('key', xqlacc);
+// Make a POST request using the Fetch API
+let furl = xqlurl + '/filestore.php?sess=' + makeid(5);
+
+let mri = new XMLHttpRequest();
+let url = xqlurl + '/filestore.php?sess=' + makeid(5);
+
+mri.open("POST", url, true);
+mri.onload = () => {
+if (mri.readyState === XMLHttpRequest.DONE) {
+if (mri.status === 200) {
+ let data = mri.response;
+if (data.includes("success")) {
+console.log("File Stored Successfully");
+let info = [
+ {
+ filename: formData.get('file').name,
+ file: formData.get('file')
+
+ }   
+    ]; 
+  if(typeof call === 'function') {
+ if(call.length === 0) {
+     call(); 
+ } else {  
+    
+call(info);
+
+}
+
+} else {
+   
+   if(call !== undefined) { 
+    
+ let newFunc = new Function(call); 
+ newFunc.call(this)
+}
+    
+} 
+
+              } else {
+                  
+                  
+ kill= 'Error uploading audio: ' + data;
+
+if(typeof killer === 'function') {
+ if(killer.length === 0) {
+     killer(); 
+ } else {  
+    
+killer(kill);
+
+}
+
+} else { 
+if(killer !== undefined) {
+ let killFunc = new Function(killer); 
+ killFunc.call(this); 
+}
+
+}
+
+                  
+                  
+                  
+              }
+            }
+          }
+        };
+mri.send(formData);
+
+
+
+
+
+} catch(error) {
+
+kill = error;
+if(typeof killer === 'function') {
+ if(killer.length === 0) {
+     killer(); 
+ } else {  
+    
+killer(kill);
+
+}
+
+} else { 
+if(killer !== undefined) {
+ let killFunc = new Function(killer); 
+ killFunc.call(this); 
+}
+
+}
+
+
+
+
+    
+}
 }
 
 
@@ -164,7 +401,7 @@ exeLogs();
 if(bundle.includes("XQL")) {
   let key = bundle.split("XQL:").pop();
   let que = document.createElement("script"); 
-  que.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/que.js";
+  que.src = "https://hexdb.vercel.app/que.js";
   document.head.appendChild(que);
   let query = document.createElement("script"); 
   query.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/query.js";
@@ -396,7 +633,7 @@ let inidata = encodeURIComponent(JSON.stringify(hexql));
 
 
 let xhr = new XMLHttpRequest();
-let url = 'https://hexxe.000webhostapp.com/newrow.php';
+let url = xqlurl+'/newrow.php';
 let params = "sess=x88&key="+xqlacc+"&name="+inidata+"&tab="+dataSelector+"&row="+db;
 
 xhr.open("POST", url, true);
@@ -453,6 +690,7 @@ function rander() {
 }
 
 function $UPDATE(base, param, call, killer) {
+    try {
 let db = base;
 let hexql = [];
 let string = param; 
@@ -496,6 +734,7 @@ hexql.push(...data);
 
 
 let dataVal = hexql;
+
 let fkey; let fval; let ofval; 
 
 let elv = nval; 
@@ -516,38 +755,32 @@ if(nval == "$dtime") {
 }
 
 
-if(ukey == "Key")  { 
-let indel = parseInt(uval) - 1;
-let item = hexql[indel];
-if(item){
-if(item.hasOwnProperty(nkey))   {
-if(nval.includes("++")) {
-fkey = nval.split("++")[0].trim(); 
-fval = nval.split("++").pop().trim();
-fval = parseInt(fval);
-if(item.hasOwnProperty(fkey))   {
-ofval = item[fkey]; 
-ofval = parseInt(ofval);
-nval = ofval + fval; 
-}    
-} else if(nval.includes("--")) {
-fkey = nval.split("--")[0].trim(); 
-fval = nval.split("--").pop().trim();
-fval = parseInt(fval);
-if(item.hasOwnProperty(fkey))   {
-ofval = item[fkey]; 
-ofval = parseInt(ofval);
-nval = ofval - fval; 
-}    
-}
-item[nkey] = nval;
 
-}
-}
-} else {  
+
+
+
+
+
+
+
+    try {
 hexql.forEach(item => {
 if(item.hasOwnProperty(ukey)) {
 if(item[ukey] == uval)  {
+    
+if(string.includes("AND")) {
+const wand = string.match(/AND (\w+) = '([^']+)'/);
+if(wand){
+cSelector = wand[1];
+cValue = wand[2];
+
+if(item[cSelector] == cValue){
+} else {
+return; 
+}
+}
+}
+    
 if(item.hasOwnProperty(nkey))   {
  if(nval.includes("$")) {
 nval = nval.split("$").pop(); 
@@ -557,38 +790,61 @@ nval = eval(nval);
 if(nval.includes("++")) {
 fkey = nval.split("++")[0].trim(); 
 fval = nval.split("++").pop().trim();
+if(isNaN(fval)) { 
+} else {
 fval = parseInt(fval);
+}
 if(item.hasOwnProperty(fkey))   {
 ofval = item[fkey]; 
+if(isNaN(ofval) && isNaN(fval)) { } else {
 ofval = parseInt(ofval);
+}
 nval = ofval + fval; 
 }    
 } else if(nval.includes("--")) {
 fkey = nval.split("--")[0].trim(); 
 fval = nval.split("--").pop().trim();
+if(isNaN(fval)) { } else {
+    
 fval = parseInt(fval);
+}
 if(item.hasOwnProperty(fkey))   {
 ofval = item[fkey]; 
+if(isNaN(ofval) && isNaN(fval)) { 
+nval = fval;
+} else {
+    
 ofval = parseInt(ofval);
 nval = ofval - fval; 
+} 
 }    
 }
+item[nkey] = nval;
 if(nval.includes("makeid0")) {
 item[nkey] = makeid(8);    
 } else {
 item[nkey] = nval;
 }
+
+
+
 }
 }     
 }     
 }); 
 
-}
+} catch(error) {
+ console.error(`Line: ${error.stack} - ${error}`) 
+} 
+
+
+
+
 
 let codetest = JSON.stringify(hexql);
 try {
 JSON.parse(codetest);
-  } catch (error) {
+   } catch (error) {
 let kill = "Corrupt or empty data"; 
 if(typeof killer === 'function') {
  if(killer.length === 0) {
@@ -665,6 +921,26 @@ xhr.send(params);
 } else {
 console.log('Invalid query format')
 } 
+} catch(error) {
+    
+if(typeof killer === 'function') {
+ if(killer.length === 0) {
+     killer(); 
+ } else {  
+    
+killer(error);
+
+}
+
+} else { 
+if(killer !== undefined) {
+ let killFunc = new Function(killer); 
+ killFunc.call(this); 
+}
+
+}
+
+}
 }
 
 
@@ -681,7 +957,7 @@ let db = ins.getAttribute('data');
 let table = ins.getAttribute('table');
 let call = ins.getAttribute('call'); 
 let insert = ins.getAttribute('insert');
-
+let pjs = ins.getAttribute('parsejs');
 if(call == null) {
 call = "";
 }
@@ -709,9 +985,27 @@ if (elem.tagName === "INPUT" && elem.type === "file") {
     const filePromises = [];
 
 for (let j = 0; j < elem.files.length; j++) {
+
+
+ let dir = elem.getAttribute('dir');
 let formData = new FormData();
 formData.append('key', xqlacc);
-formData.append('file', elem.files[j]);
+if(dir == undefined || dir == null) {
+    formData.append('file', elem.files[j]);
+    
+} else {
+let saven = dir + "_" + elem.files[j].name; 
+
+const fileInput = elem.files[j];
+const newFileName = saven; // Change this to your desired filename
+const modifiedFile = new File([fileInput], newFileName, { type: fileInput.type });
+formData.append('file', modifiedFile);
+
+
+
+}
+
+
 let filecall = elem.getAttribute('filecall');
 
 const filePromise = new Promise((resolve) => {
@@ -800,12 +1094,28 @@ if(dem == true) {} else {
 
 if(elem.type !== "file") {
 let fval = elem.value;
+if(fval == "") {
+let setval = elem.getAttribute('val'); 
+if(setval == undefined || setval == null)  { } else {
+fval = setval; 
+ 
+ 
+ 
+ 
+ 
+}  
+} 
+if(pjs == "false") {
+elem.value = "";     
+
+} else {
 if(fval.includes("$js-")) {
 fval = fval.split("$js-").pop(); 
 fval = eval(fval);
 } else { 
 elem.value = "";     
 
+}
 }
 fval = fval.replace(/\)/g, "&rpar;");
 fval = fval.replace(/\(/g, "&lpar;");
@@ -821,7 +1131,13 @@ let filer = elem.files;
 let allfick = ""; 
 for(let i = 0; i < filer.length; i++) {
 let file = filer[i]; 
-let fick = file.name; 
+let fick = file.name;
+let dir2 = elem.getAttribute('dir');
+if(dir2 == undefined || dir2 == null) { } else {
+fick = dir2 + "_" + fick; 
+
+}
+
 fick = fick.replace(/\s/, '-');
 fick = fick.replace(/\(/, '');
 fick = fick.replace(/\)/, '');
@@ -886,6 +1202,7 @@ let table = ins.getAttribute('table');
 let insert = ins.getAttribute('insert'); 
 let call = ins.getAttribute('call'); 
 let killer = ins.getAttribute("error"); 
+let pjs = ins.getAttribute('parsejs');
 if(call == null || call == undefined) {
 call = "";
 }
@@ -894,8 +1211,10 @@ if(killer == null || killer == undefined) {
     killer = "";
 }
 let query = ins.getAttribute('query');
+let poquery = ins.getAttribute('and');
 let ukey = query.split("=")[0].trim(); 
 let uval = query.split("=").pop().trim();
+
 if(uval.includes("$js-")) {
 uval = uval.split("$js-").pop(); 
 uval = eval(uval);
@@ -912,9 +1231,23 @@ if (elem.tagName === "INPUT" && elem.type === "file") {
     const filePromises = [];
 
 for (let j = 0; j < elem.files.length; j++) {
+ let dir = elem.getAttribute('dir');
 let formData = new FormData();
 formData.append('key', xqlacc);
-formData.append('file', elem.files[j]);
+if(dir == undefined || dir == null) {
+    formData.append('file', elem.files[j]);
+    
+} else {
+let saven = dir + "_" + elem.files[j].name; 
+
+const fileInput = elem.files[j];
+const newFileName = saven; // Change this to your desired filename
+const modifiedFile = new File([fileInput], newFileName, { type: fileInput.type });
+formData.append('file', modifiedFile);
+
+
+
+}
 let filecall = elem.getAttribute('filecall');
 
 const filePromise = new Promise((resolve) => {
@@ -997,6 +1330,11 @@ let allfick = "";
 for(let i = 0; i < filer.length; i++) {
 let file = filer[i]; 
 let fick = file.name; 
+let dir2 = elem.getAttribute('dir');
+if(dir2 == undefined || dir2 == null) { } else {
+fick = dir2 + "_" + fick; 
+
+}
 fick = fick.replace(/\s/, '-');
 fick = fick.replace(/\(/, '');
 fick = fick.replace(/\)/, ''); 
@@ -1027,54 +1365,53 @@ if(val == "$dtime") {
 }
 } else {
 if(elem.type !== "file")  { 
-    
- if(val.includes("$js-")) {} else { 
+ if(pjs == "false") {
+     
+elem.value = "";     
+
+     
+ } else {   
+ if(val.includes("$js-")) {
+     
+     
+val = val.split("$js-").pop(); 
+val = eval(val);
+
+     
+     
+ } else { 
     
  elem.value = "";     
  }
  
  
-}    
+}}    
     
 }
 
-if(ukey == "Key")  { 
-
-let indel = parseInt(uval) - 1;
-let item = hexql[indel];
-if(item){
-if(item.hasOwnProperty(name))   {
- if(pull !== null) {   
-if(pull.includes("++")) {
-fkey = pull.split("++")[0].trim(); 
-fval = parseInt(val);
-if(item.hasOwnProperty(fkey))   {
-ofval = item[fkey]; 
-ofval = parseInt(ofval);
-val = ofval + fval; 
-}    
-} else if(pull.includes("--")) {
-fkey = pull.split("--")[0].trim(); 
-fval = parseInt(val);
-if(item.hasOwnProperty(fkey))   {
-ofval = item[fkey]; 
-ofval = parseInt(ofval);
-val = ofval - fval; 
-}    
-}
-}
-    
-    
-    
-    item[name] = val;  
-}
-}}
-
-else {
-    
 hexql.forEach(item => {
 if(item.hasOwnProperty(ukey)) {
 if(item[ukey] == uval)  {
+if(poquery == null || poquery == undefined) { 
+    
+console.log("");   
+} else {
+    
+let okey = poquery.split("=")[0].trim(); 
+let oval = poquery.split("=").pop().trim();
+if(oval.includes("$js-")) {
+oval = oval.split("$js-").pop(); 
+oval = eval(oval);
+
+    
+}
+if(item[okey] == oval){
+} else {
+return; 
+}
+
+}
+    
 if(item.hasOwnProperty(name))   {
  if(pull !== null)  {  
 if(pull.includes("++")) {
@@ -1108,7 +1445,7 @@ item[name] = val;
 }    
 }); 
 
-}
+
 
 }     
 }      
@@ -1338,6 +1675,7 @@ $IMPORT(data)
 
 }
 
+
 function Xporter(mod) {
 if(mod !== undefined) {
 const path = mod;
@@ -1397,7 +1735,6 @@ document.head.appendChild(nStyler);
 }
 
 }
-
 
 
 function allModulePaths() {
