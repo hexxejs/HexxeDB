@@ -166,7 +166,7 @@ searchQL.addEventListener("keypress", function(event) {
     });    
 
 
-document.getElementById('name').innerText = tabe+"/"+tabed; 
+document.getElementById('name').innerHTML = `<a href="tab.html?tab=${tabe}" style="text-decoration: none; color: #DC4D01;">${tabe}/${tabed}</a>`; 
 window.onload = refQL;
 
 function refQL() {
