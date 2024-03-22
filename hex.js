@@ -1,4 +1,4 @@
-const xqlurl = "https://hexxedb.000webhostapp.com";
+const xqlurl = "https://pixelatejs.000webhostapp.com";
 const xqlget = xqlurl+"/getrow.php";
 const xlog = [];
 const xerror = [];
