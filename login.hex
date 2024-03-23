@@ -105,7 +105,7 @@ if(data == "invalid" || data == "Incorrect Password" || data == "") {
 alert("Invalid Login")    
 } else {
 localStorage.setItem("xqlpass", data); 
-alert(`Your passkey is ${data}`);
+alert(`Your passkey code is ${data}`);
 setTimeout(function(){
 history.go(0);
 }, 1000); 
