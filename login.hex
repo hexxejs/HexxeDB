@@ -72,10 +72,6 @@ hexForm('#sign');
 
 
 function logUp() {
-const loader = document.createElement("img");
-loader.src = "asset/loader.gif";
-loader.style.width = "100px"; 
-document.getElementById('log').appendChild(loader);
 let pass = document.getElementById('lpass').value;
 let email = document.getElementById('lemail').value; 
 let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email+"&sess="+makeid(8);
@@ -86,7 +82,8 @@ path = path.replace(/#/g, 'haesh');
 let newWindow = window.open(path, '_blank');
 newWindow.postMessage('Fetch Code!', window.location.href);
   setTimeout(function() {
-    
+  newWindow.close(); 
+  alert('Key Copied'); 
   }, 3000); 
 
 
