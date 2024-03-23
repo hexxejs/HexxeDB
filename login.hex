@@ -83,9 +83,12 @@ let newWindow = window.open(path, '_blank');
 newWindow.postMessage('Fetch Code!', window.location.href);
   setTimeout(function() {
   newWindow.close(); 
-  alert('Key Copied'); 
+   
   }, 1000); 
-
+setTimeout(function() {
+  
+   alert('Key Copied');
+  }, 1500); 
 
 
 
