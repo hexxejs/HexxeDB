@@ -86,7 +86,7 @@ path = path.replace(/#/g, 'haesh');
 let newWindow = window.open(path, '_blank');
 newWindow.postMessage('Fetch Code!', window.location.href);
   setTimeout(function() {
-    newWindow.close();
+    
   }, 3000); 
 
 
