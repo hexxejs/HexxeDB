@@ -1,13 +1,6 @@
 <style local>
- #login input {
-     margin-bottom: 10px; 
-     font-size: 16px;
-     width: 80%;
-     padding-top: 10px; 
-     padding-bottom: 10px;
- } 
  
-  #signin input {
+  input {
      margin-bottom: 10px; 
      font-size: 16px;
      width: 80%;
@@ -35,11 +28,14 @@
 
 </form>
 </div>
-
+<br>
+<input id="keyval" theme="smart" placeholder="Enter Key"><button size="17px" onclick="localStorage.setItem('xqlpass', document.getElementById('keyval').value); history.go(0);" theme="smart">Go</button>
 </hexxe>
 
     
 <script local>
+
+
 const logIn = newHexForm([
 {input: "true", id: "lemail", theme: "light shadow", name:"email", type: "email", placeholder: "example@gmail.com"},
 {input: "true", id: "lpass", theme: "light shadow", name:"password", type: "password", placeholder: "password"},
@@ -81,8 +77,8 @@ let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email+"&sess="+makeid
 path = path.replace(/#/g, 'haesh'); 
 
 
-
-fetch(path)
+window.open(path); 
+// fetch(path)
   .then(response => response.text())
   .then(data => {
 if(data == "invalid" || data == "Incorrect Password" || data == "") {
