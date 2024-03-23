@@ -77,7 +77,7 @@ loader.style.width = "100px";
 document.getElementById('log').appendChild(loader);
 let pass = document.getElementById('lpass').value;
 let email = document.getElementById('lemail').value; 
-let path = "https://hexxe.000webhostapp.com/sign.php?meth=in&pass="+pass+"&email="+email;
+let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email;
 path = path.replace(/#/g, 'haesh'); 
 
 let urlParts = path.split('?');
@@ -128,7 +128,7 @@ let pass = document.getElementById('spass').value;
 let email = document.getElementById('semail').value;
 let key = document.getElementById('skey').value;
 let user = document.getElementById('suser').value;
-let path = "https://hexxe.000webhostapp.com/sign.php?meth=up&pass="+pass+"&email="+email+"&key="+key+"&name="+user;
+let path = xqlurl+"/sign.php?meth=up&pass="+pass+"&email="+email+"&key="+key+"&name="+user;
 path = path.replace(/#/g, 'haesh');
 let urlParts = path.split('?');
   
