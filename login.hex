@@ -152,14 +152,15 @@ let urlParts = path.split('?');
 
 fetch(path).then(function(response) { response.text().then(function(text) {
 let data = text; 
-if(data !== "success") {
-alert(data)    
-} else {
+if(data.includes("success")) {
+
 localStorage.setItem("xqlpass", key);
 console.log(`Your passkey is ${key}`); 
 setTimeout(function(){
 history.go(0);
 }, 1000); 
+} else {
+alert(data)
 }
 loader.remove();
 }); }).catch(error => {
