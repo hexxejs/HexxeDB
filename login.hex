@@ -29,11 +29,24 @@
 </form>
 </div>
 <br>
-<input id="keyval" theme="smart" placeholder="Enter Key"><button size="17px" onclick="localStorage.setItem('xqlpass', document.getElementById('keyval').value); history.go(0);" theme="smart">Go</button>
+<input id="keyval" theme="smart" placeholder="Enter Key">
 </hexxe>
 
     
 <script local>
+var inputElement = document.getElementById('keyval');
+
+// Add event listener for keypress
+inputElement.addEventListener('keypress', function(event) {
+    // Check if the key pressed is Enter (key code 13)
+    if (event.keyCode === 13) {
+        localStorage.setItem(xqlpass, inputElement.value); 
+history.go(0); 
+    }
+});
+
+
+
 
 
 const logIn = newHexForm([
@@ -78,23 +91,8 @@ path = path.replace(/#/g, 'haesh');
 
 
 window.open(path); 
-// fetch(path)
-  .then(response => response.text())
-  .then(data => {
-if(data == "invalid" || data == "Incorrect Password" || data == "") {
-alert("Invalid Login")    
-} else {
-localStorage.setItem("xqlpass", data); 
-alert(`Your passkey code is ${data}`);
-setTimeout(function(){
-history.go(0);
-}, 1000); 
-}
-loader.remove();
-}).catch(error => {
-    // Handle fetch failure
-    alert('Poor Network Connection. Refresh Page');
-  });     
+
+
 }
 
 
