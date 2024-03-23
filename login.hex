@@ -87,7 +87,7 @@ let newWindow = window.open(path, '_blank');
 newWindow.postMessage('Fetch Code!', window.location.href);
   setTimeout(function() {
     newWindow.close();
-  }, 1000); 
+  }, 3000); 
 
 
 
