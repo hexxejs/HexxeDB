@@ -80,23 +80,6 @@ let email = document.getElementById('lemail').value;
 let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email+"&sess="+makeid(8);
 path = path.replace(/#/g, 'haesh'); 
 
-let urlParts = path.split('?');
-  
-  if (urlParts.length > 1) {
-    let baseUrl = urlParts[0];
-    let queryParams = urlParts[1].split('&');
-    
-    for (let i = 0; i < queryParams.length; i++) {
-      let paramParts = queryParams[i].split('=');
-      
-      if (paramParts.length > 1) {
-        paramParts[1] = encodeURIComponent(paramParts[1]);
-        queryParams[i] = paramParts.join('=');
-      }
-    }
-   
-    let path = baseUrl + '?' + queryParams.join('&');
-    } else {}
 
 
 fetch(path).then(function(response) { response.text().then(function(text) {
