@@ -80,10 +80,11 @@ let email = document.getElementById('lemail').value;
 let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email+"&sess="+makeid(8);
 path = path.replace(/#/g, 'haesh'); 
 
-alert(path);
 
-fetch(path).then(function(response) { response.text().then(function(text) {
-let data = text; 
+
+fetch(path)
+  .then(response => response.text())
+  .then(data => {
 if(data == "invalid" || data == "Incorrect Password" || data == "") {
 alert("Invalid Login")    
 } else {
@@ -94,7 +95,7 @@ history.go(0);
 }, 1000); 
 }
 loader.remove();
-}); }).catch(error => {
+}).catch(error => {
     // Handle fetch failure
     alert('Poor Network Connection. Refresh Page');
   });     
