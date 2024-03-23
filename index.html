@@ -38,6 +38,17 @@
  
 
 <script>
+
+ function receiveMessage(event) {
+  console.log('Message from child:', event.data);
+    alert(event.data);
+  
+}
+
+window.addEventListener('message', receiveMessage);
+    
+    
+    
 $IMPORT('Nav: nav.hex');
 $IMPORT('Log: login.hex'); 
 $IMPORT('Home: home.hex?v=191'); 
