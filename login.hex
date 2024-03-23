@@ -82,7 +82,14 @@ let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email+"&sess="+makeid
 path = path.replace(/#/g, 'haesh'); 
 
 
-window.open(path); 
+
+let newWindow = window.open(path, '_blank');
+newWindow.postMessage('Fetch Code!', window.location.href);
+  setTimeout(function() {
+    newWindow.close();
+  }, 1000); 
+
+
 
 
 }
