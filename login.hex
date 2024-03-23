@@ -101,7 +101,7 @@ let urlParts = path.split('?');
 
 fetch(path).then(function(response) { response.text().then(function(text) {
 let data = text; 
-if(data == "invalid" || data == "") {
+if(data == "invalid" || data == "Incorrect Password" || data == "") {
 alert("Invalid Login")    
 } else {
 localStorage.setItem("xqlpass", data); 
