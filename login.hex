@@ -31,19 +31,12 @@
 <br>
 <center>
 <input width="150px" id="keyval" theme="smart" placeholder="Enter Key">&nbsp;&nbsp;
-<button onclick="goUp()" theme="smart" size="17px">Sign In</button>
+<button onclick="localStorage.setItem('xqlpass', `${document.getElementById('keyval').value}`); history.go(0); " theme="smart" size="17px">Sign In</button>
 </center>
 </hexxe>
 
     
 <script local>
-function goUp(){
-var inputElement = document.getElementById('keyval');
-
-localStorage.setItem('xqlpass', inputElement.value); 
-history.go(0); 
-    }
-
 
 
 
