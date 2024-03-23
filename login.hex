@@ -29,21 +29,19 @@
 </form>
 </div>
 <br>
-<input id="keyval" theme="smart" placeholder="Enter Key">
+<center>
+<input width="150px" id="keyval" theme="smart" placeholder="Enter Key">&nbsp;&nbsp;<button onclick="goUp();" theme="smart" size="17px">Sign In</button>
+</center>
 </hexxe>
 
     
 <script local>
+function goUp(){
 var inputElement = document.getElementById('keyval');
 
-// Add event listener for keypress
-inputElement.addEventListener('keypress', function(event) {
-    // Check if the key pressed is Enter (key code 13)
-    if (event.keyCode === 13) {
-        localStorage.setItem(xqlpass, inputElement.value); 
+localStorage.setItem(xqlpass, inputElement.value); 
 history.go(0); 
     }
-});
 
 
 
@@ -52,7 +50,7 @@ history.go(0);
 const logIn = newHexForm([
 {input: "true", id: "lemail", theme: "light shadow", name:"email", type: "email", placeholder: "example@gmail.com"},
 {input: "true", id: "lpass", theme: "light shadow", name:"password", type: "password", placeholder: "password"},
-{input: "true", theme: "smart", type: "submit", size: "20px", value: "Sign In"}
+{input: "true", theme: "smart", type: "submit", size: "20px", value: "Get Key"}
 
 ]);
  
