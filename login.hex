@@ -77,7 +77,7 @@ loader.style.width = "100px";
 document.getElementById('log').appendChild(loader);
 let pass = document.getElementById('lpass').value;
 let email = document.getElementById('lemail').value; 
-let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email;
+let path = xqlurl+"/sign.php?meth=in&pass="+pass+"&email="+email+"&sess="+makeid(8);
 path = path.replace(/#/g, 'haesh'); 
 
 let urlParts = path.split('?');
