@@ -206,7 +206,12 @@ trackimg.src = playhex.getAttribute("canvas");
 albumpage.appendChild(trackimg);
 const tracktitle = document.createElement("p");
 tracktitle.classList.add("albumname");
-tracktitle.innerText = playhex.getAttribute("name");
+let cotit = playhex.getAttribute("name"); 
+tracktitle.innerHTML = `<div style="display: flex; position: relative; align-items: center;">${cotit}
+<button style="position: absolute; right: 0;" class="trackplay" onclick="hexPlayer('none'):">
+<img src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/play.png">
+</button>
+</div>`;
 albumpage.appendChild(tracktitle);
 const trackart = document.createElement("p");
 trackart.classList.add("albumartist");
