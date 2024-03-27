@@ -98,6 +98,7 @@ trackartist = trackartist.replace(/\'/g, "’");
 let trackcanvas = hexsrc.getAttribute("canvas");
 if(trackcanvas == null)  {
 trackcanvas = playhex.getAttribute("canvas");
+hexsrc.setAttribute("canvas", trackcanvas); 
 }
 const tracksource = wavsrc[0].getAttribute("src");
 const alltracksource = hexsrc.getAttribute("src");
