@@ -170,7 +170,7 @@ innerlyric.classList.add("innerlyric");
 innerid = makeid(7);
 
 if(tracklyrics == null || tracklyrics == "") {
-tracklyrics = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/nocap.txt"; 
+tracklyrics = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/nocaption.txt"; 
 } 
 const thelyric = load(tracklyrics, '#'+innerid);
 innerlyric.id = innerid; 
