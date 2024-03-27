@@ -90,15 +90,21 @@ if(hexprev < 0) {
 }
 const trackrname = hexsrc.getAttribute("name");
 const trackname = trackrname.replace(/\'/g, "’");
-const trackrartist = hexsrc.getAttribute("artist");
-const trackartist = trackrartist.replace(/\'/g, "’");
-const trackcanvas = hexsrc.getAttribute("canvas");
+let trackrartist = hexsrc.getAttribute("artist");
+if(trackartist == null)  {
+trackartist = playhex.getAttribute("artist");
+}
+trackartist = trackrartist.replace(/\'/g, "’");
+let trackcanvas = hexsrc.getAttribute("canvas");
+if(trackcanvas == null)  {
+trackcanvas = playhex.getAttribute("canvas");
+}
 const tracksource = wavsrc[0].getAttribute("src");
 const alltracksource = hexsrc.getAttribute("src");
 const tracklyrics = hexsrc.getAttribute("lyrics");
-var trackshare = hexsrc.getAttribute("share");
+let trackshare = hexsrc.getAttribute("share");
 if(trackshare == null) {
-  var trackshare = window.location; 
+  trackshare = window.location; 
 }
 const trackbody = document.createElement("div");
 trackbody.classList.add("trackbody");
