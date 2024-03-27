@@ -4337,11 +4337,16 @@ if(data == null) {
 if(data == "") {
   } else {
 if (innerh !== undefined) {
-if(locateh.includes("txt")) {
+if(locateh.includes("txt")) { 
+ try{ 
 document.querySelector(innerh).innerText = data;
-} else {    
+ } catch(err) { console.error('Lyric Element Not Found'); }
+} else {  
+  try {
 document.querySelector(innerh).innerHTML = data;
-}} 
+  } catch(err) { console.error('Lyric Element Not Found'); }
+  
+  }} 
 else {
 pend = this; 
 alert(pend);
