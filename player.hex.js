@@ -98,6 +98,7 @@ trackartist = trackartist.replace(/\'/g, "’");
 let trackcanvas = hexsrc.getAttribute("canvas");
 if(trackcanvas == null)  {
 trackcanvas = playhex.getAttribute("canvas");
+hexsrc.setAttribute("canvas", trackcanvas); 
 }
 const tracksource = wavsrc[0].getAttribute("src");
 const alltracksource = hexsrc.getAttribute("src");
@@ -367,11 +368,15 @@ const showtr = playhex.getElementsByTagName('track');
 for (var i = 0; i < showtr.length; i++) { 
 currshow = "track"+i; 
 var currhex = document.getElementById(currshow);
+if(currhex) {
 currhex.style.display='none';
+}
 }
 var current = "track"+inicurr;
 var trackdex = document.getElementById(current);
+if(trackdex){
 trackdex.style.display='block';
+} 
 var trackele = playhex.getElementsByTagName('track')[inicurr];
 var audiosrc = trackele.getAttribute("src");
 var audioname = trackele.getAttribute("name");
