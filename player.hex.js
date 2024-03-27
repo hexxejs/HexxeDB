@@ -208,8 +208,8 @@ const tracktitle = document.createElement("p");
 tracktitle.classList.add("albumname");
 let cotit = playhex.getAttribute("name"); 
 tracktitle.innerHTML = `<div style="display: flex; position: relative; align-items: center;">${cotit}
-<button style="position: absolute; width: 50px; height: 50px; right: 0;" class="trackplay" onclick="hexPlayer('0'); togTrack();">
-<img id="albumplay" style="width: 16.2px" src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/play.png">
+<button style="position: absolute; width: 50px; height: 50px; right: 0;" class="trackplay" onclick="hexPlayer('0'); setPause(); document.getElementById('track0').style.display = 'block';">
+<img id="albumplay" style="width: 18px" src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/play.png">
 </button>
 </div>`;
 albumpage.appendChild(tracktitle);
@@ -343,6 +343,10 @@ try{
 }
 }, 1000); 
 
+function setPause(){
+let elem = document.getElementById('albumplay'); 
+elem.setAttribute('onclick', `hexPlayer('none'); document.getElementById('track0').style.display = 'block';`); 
+}
 
 function hexPlayer(currenth) {
 var inicurr = currenth;
