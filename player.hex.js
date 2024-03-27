@@ -46,7 +46,7 @@ trackslide.setAttribute("value", "0");
 const trackplay = document.createElement("button");
 trackplay.setAttribute("onclick", "hexPlayer('none')");
 trackplay.classList.add("trackplay");
-trackplay.innerHTML = '<img id="trackplay" src="https://hexjs.vercel.app/Sum/files/play.png">';
+trackplay.innerHTML = '<img id="trackplay" src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/play.png">';
 const tracklist = document.createElement("div");
 tracklist.classList.add("tracklist");
 tracklist.id = "tracklist";
@@ -355,11 +355,11 @@ if(inicurr == "none") {
     if(pstat == "pause") { 
     tracked.play();
     pstatus.innerHTML = "play";
-    playp.src = "https://hexjs.vercel.app/Sum/files/pause.png";
+    playp.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/pause.png";
 } else {
 tracked.pause();   
 pstatus.innerHTML = "pause";
-playp.src = "https://hexjs.vercel.app/Sum/files/play.png";
+playp.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/play.png";
     
 }
 
@@ -389,12 +389,12 @@ if(tracked.currentTime == tracked.duration) {
 tracked.currentTime = "0";
 tracked.play();
 pstatus.innerHTML = "play";
-playp.src = "https://hexjs.vercel.app/Sum/files/pause.png";
+playp.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/pause.png";
 } else {
     if(pstat == "pause") { 
     tracked.play();
     pstatus.innerHTML = "play";
-    playp.src = "https://hexjs.vercel.app/Sum/files/pause.png";
+    playp.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/pause.png";
 } }
    
 } else {
@@ -404,7 +404,7 @@ playp.src = "https://hexjs.vercel.app/Sum/files/pause.png";
 tracked.src = audiosrc; 
 tracked.play();
 pstatus.innerHTML = "play";
-playp.src = "https://hexjs.vercel.app/Sum/files/pause.png";
+playp.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/pause.png";
 }
 
 
