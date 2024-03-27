@@ -433,6 +433,7 @@ ticon.href = curricon;
 thead.appendChild(ticon);
 
 }
+   setPause();
 }
 
 function togTrack() {
