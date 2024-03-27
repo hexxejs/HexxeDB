@@ -102,7 +102,7 @@ hexsrc.setAttribute("canvas", trackcanvas);
 }
 const tracksource = wavsrc[0].getAttribute("src");
 const alltracksource = hexsrc.getAttribute("src");
-const tracklyrics = hexsrc.getAttribute("lyrics");
+let tracklyrics = hexsrc.getAttribute("lyrics");
 let trackshare = hexsrc.getAttribute("share");
 if(trackshare == null) {
   trackshare = window.location; 
