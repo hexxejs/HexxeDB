@@ -3232,7 +3232,7 @@ xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); xhr.s
 
 function newPlayer() {
 const pscript = document.createElement("script"); 
-pscript.src = "/Sum/player.hex.js";
+pscript.src = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/player.hex.js";
 document.body.appendChild(pscript); 
 newAud();
 }
