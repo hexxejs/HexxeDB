@@ -168,13 +168,12 @@ trackbody.appendChild(tracktext);
 const innerlyric = document.createElement("div"); 
 innerlyric.classList.add("innerlyric");
 innerid = makeid(7);
-if(tracklyrics == null) {
+if(tracklyrics == null || tracklyrics == "") {
 innerlyric.innerHTML = '<in style="opacity: 0.5">No caption available</in>';   
 } else {
-const thelyric = load(tracklyrics, '#'+innerid); 
-innerlyric.id = innerid;
+const thelyric = load(tracklyrics, '#'+innerid);
 } 
-
+innerlyric.id = innerid; 
 tracktext.appendChild(innerlyric);
 if(ifalbum == "album") {
 const eachtrack = document.createElement("div");
