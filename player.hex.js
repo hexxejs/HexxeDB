@@ -168,13 +168,11 @@ trackbody.appendChild(tracktext);
 const innerlyric = document.createElement("div"); 
 innerlyric.classList.add("innerlyric");
 innerid = makeid(7);
-let thelyric = ""; 
+
 if(tracklyrics == null || tracklyrics == "") {
-thelyric = "No Caption"; 
-innerlyric.innerHTML = '<in style="opacity: 0.5">No caption available</in>';   
-} else {
-thelyric = load(tracklyrics, '#'+innerid);
+tracklyrics = "https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/nocap.txt"; 
 } 
+const thelyric = load(tracklyrics, '#'+innerid);
 innerlyric.id = innerid; 
 tracktext.appendChild(innerlyric);
 if(ifalbum == "album") {
