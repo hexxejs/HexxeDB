@@ -208,7 +208,7 @@ const tracktitle = document.createElement("p");
 tracktitle.classList.add("albumname");
 let cotit = playhex.getAttribute("name"); 
 tracktitle.innerHTML = `<div style="display: flex; position: relative; align-items: center;">${cotit}
-<button style="position: absolute; width: 50px; height: 50px; right: 0;" class="trackplay" onclick="setPause(); document.getElementById('track0').style.display = 'block'; togTrackRep(); hexPlayer('0');">
+<button style="position: absolute; width: 50px; height: 50px; right: 0;" class="trackplay" onclick="setPause(); document.getElementById('hex-player').style.visibility='visible'; document.getElementById('track0').style.display = 'block'; togTrackRep(); hexPlayer('0');">
 <img id="albumplay" style="width: 20px" src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/asset/play.png">
 </button>
 </div>`;
