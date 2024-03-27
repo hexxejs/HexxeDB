@@ -90,11 +90,11 @@ if(hexprev < 0) {
 }
 const trackrname = hexsrc.getAttribute("name");
 const trackname = trackrname.replace(/\'/g, "’");
-let trackrartist = hexsrc.getAttribute("artist");
+let trackartist = hexsrc.getAttribute("artist");
 if(trackartist == null)  {
 trackartist = playhex.getAttribute("artist");
 }
-trackartist = trackrartist.replace(/\'/g, "’");
+trackartist = trackartist.replace(/\'/g, "’");
 let trackcanvas = hexsrc.getAttribute("canvas");
 if(trackcanvas == null)  {
 trackcanvas = playhex.getAttribute("canvas");
