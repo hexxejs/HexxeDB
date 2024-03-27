@@ -98,7 +98,6 @@ trackartist = trackartist.replace(/\'/g, "’");
 let trackcanvas = hexsrc.getAttribute("canvas");
 if(trackcanvas == null)  {
 trackcanvas = playhex.getAttribute("canvas");
-// hexsrc.setAttribute("canvas", trackcanvas); 
 }
 const tracksource = wavsrc[0].getAttribute("src");
 const alltracksource = hexsrc.getAttribute("src");
@@ -516,7 +515,6 @@ const hexhead = document.createElement("meta");
 hexhead.name = "theme-color";
 hexhead.content = "#3e3c4a"; 
 document.getElementsByTagName('head')[0].appendChild(hexhead);
-
 
 
 
