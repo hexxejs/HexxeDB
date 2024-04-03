@@ -338,7 +338,12 @@ let path = xqlget+"?key="+passkey+"&tab="+dataSelector+"&row="+db+"&sess="+makei
 pull: function(usage, killer) {
 let kill = ""; 
 return fetch(path).then(response => response.text()).then(data => {
-if(data == "") { } else {
+if(data == "" || data.includes("Domain Not Allowed")) {
+if(data.includes("Domain Not Allowed")) {
+console.log(data); 
+}
+    
+} else {
 let hexql = JSON.parse(data);
 if(hexql) {
 } else {
