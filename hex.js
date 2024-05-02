@@ -11,6 +11,49 @@ const pileRoute = [];
 const ruClass = [];
 let routeAll;
 let noRoute;
+
+// image framing 
+
+function imgFrame(){
+let hasframe = document.querySelectorAll('[frame]');
+if(hasframe){
+hasframe.forEach(function(img){
+ img.onclick = function() {
+let body = document.createElement("div"); 
+body.classList.add("xxbody"); 
+let hang = document.createElement("div"); 
+hang.classList.add("xxhang"); 
+let string = document.createElement("div"); 
+string.classList.add("xxstring"); 
+let pin = document.createElement("div"); 
+pin.classList.add("xxpin"); 
+hang.appendChild(string); 
+hang.appendChild(pin); 
+body.appendChild(hang); 
+let frame = document.createElement("div");
+frame.classList.add("xxframe"); 
+frame.innerHTML = `<img src="${this.src}" width="100%">`; 
+hang.appendChild(frame); 
+let close = document.createElement("div"); 
+close.classList.add("xxclose");
+close.innerHTML = "×"; 
+hang.appendChild(close); 
+document.body.appendChild(body); 
+close.onclick = function(){
+ body.remove();    
+}; 
+}
+    
+});   
+  
+}
+}
+
+
+
+
+
+
 // http get method 
 
 function $GET(urlh, linkh) {
@@ -3294,7 +3337,7 @@ function rootHex(target) {
 
 var startTime = performance.now();
 xlogs.push(`at ( <anonymous> ) UI Running`);
-
+setInterval(imgFrame, 1000);
 let hexxer;   
 if(target !== undefined) {
 hexxer = document.querySelector(target);  
