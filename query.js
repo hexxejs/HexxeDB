@@ -105,6 +105,18 @@ let qparam = query.getElementsByTagName('data')[0];
 let string = qparam.textContent;
 let empty = query.getElementsByTagName('empty')[0];
 let emptyval = ""; 
+let onewrap = ""; 
+let twowrap = ""; 
+let owrap = query.querySelectorAll('wrap')[0]; 
+if(owrap){
+onewrap = owrap.innerHTML; 
+} 
+let twrap = query.querySelectorAll('wrap')[0]; 
+if(twrap){
+twowrap = twrap.innerHTML; 
+} 
+
+
 if(empty) { 
 emptyval = empty.innerHTML;
 empty.remove(); 
@@ -443,14 +455,14 @@ thisVal = emptyval;
 
 if(origin !== undefined) { 
 let oridata = document.querySelector(origin);
-oridata.innerHTML = thisVal; 
-oridata.value = thisVal; 
+oridata.innerHTML = onewrap + thisVal + twowrap; 
+oridata.value = onewrap + thisVal + twowrap; 
 oridata.show();
 query.remove();
     
     
 } else {
-query.innerHTML = thisVal; 
+query.innerHTML = onewrap + thisVal + twowrap; 
 query.show(); 
 }
 
@@ -789,14 +801,14 @@ addVal = emptyval;
 if(origin !== undefined) { 
 let oridata = document.querySelector(origin); 
 
-oridata.innerHTML = addVal; 
-oridata.value = addVal; 
+oridata.innerHTML = onewrap + addVal + twowrap; 
+oridata.value = onewrap + addVal + twowrap; 
 oridata.show();
 query.remove();
     
     
 } else {
-query.innerHTML = addVal; 
+query.innerHTML = onewrap + addVal + twowrap; 
 query.show();
 }
 rootHex();
