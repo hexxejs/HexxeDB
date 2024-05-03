@@ -111,7 +111,7 @@ let owrap = query.querySelectorAll('wrap')[0];
 if(owrap){
 onewrap = owrap.innerHTML; 
 } 
-let twrap = query.querySelectorAll('wrap')[0]; 
+let twrap = query.querySelectorAll('wrap')[1]; 
 if(twrap){
 twowrap = twrap.innerHTML; 
 } 
