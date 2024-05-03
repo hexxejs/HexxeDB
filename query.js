@@ -107,11 +107,11 @@ let empty = query.getElementsByTagName('empty')[0];
 let emptyval = ""; 
 let onewrap = ""; 
 let twowrap = ""; 
-let owrap = query.querySelectorAll('wrap')[0]; 
+let owrap = query.querySelectorAll('fold')[0]; 
 if(owrap){
 onewrap = owrap.innerHTML; 
 } 
-let twrap = query.querySelectorAll('wrap')[1]; 
+let twrap = query.querySelectorAll('fold')[1]; 
 if(twrap){
 twowrap = twrap.innerHTML; 
 } 
