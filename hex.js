@@ -3345,11 +3345,13 @@ hexxer = document.querySelector(target);
 hexxer = document;
 } 
 const sumicon = document.createElement('script');
-sumicon.src= 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/xcon.js'; 
+sumicon.src= 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@latest/xcon.js'; 
+sumicon.id = "xconjs"; 
 const sumcss = document.createElement('link');
 sumcss.rel = 'stylesheet';
 sumcss.type = 'text/css';
-sumcss.href = 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@v1.1/hex.css';
+sumcss.href = 'https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB@latest/hex.css';
+sumcss.id = "sumcss"; 
 const popcss = document.createElement('link');
 popcss.rel = 'stylesheet';
 popcss.type = 'text/css';
@@ -3370,10 +3372,21 @@ const outcss = document.createElement('link');
 outcss.rel = 'stylesheet';
 outcss.type = 'text/css';
 outcss.href = 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap';
+const ubucss = document.createElement('link');
+ubucss.rel = 'stylesheet';
+ubucss.type = 'text/css';
+ubucss.href = 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;600;900&display=swap'; 
+let cicon = document.getElementById('xconjs'); 
+if(cicon) {} else {
 sumhead.appendChild(sumicon);
-sumhead.appendChild(sumcss);  
+}
+let cicss = document.getElementById('sumcss'); 
+if(cicss) {} else {
+sumhead.appendChild(sumcss); 
+}
 sumhead.appendChild(popcss);  
-sumhead.appendChild(urbcss);  
+sumhead.appendChild(urbcss);
+sumhead.appendChild(ubucss);
 sumhead.appendChild(rubcss);  
 sumhead.appendChild(chacss);  
 sumhead.appendChild(outcss);
