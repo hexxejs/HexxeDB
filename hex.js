@@ -3844,8 +3844,11 @@ for(var i = 0; i < nosc.length;i++) {const thenosc = nosc[i]; thenosc.classList.
 thenosc.removeAttribute('noscroll');}  
 
 const stheme = hexxer.querySelectorAll('[theme]');
-for(var i = 0; i < stheme.length;i++) {const sthemecurr = stheme[i];  sthemepick = sthemecurr.getAttribute("theme"); const themestr = sthemepick.split(' ');
-sthemecurr.setAttribute("class", themestr[0] + " " + themestr[1] + " " + themestr[2] + " " + themestr[3]);
+for(var i = 0; i < stheme.length;i++) {
+const sthemecurr = stheme[i]; sthemepick = sthemecurr.getAttribute("theme"); const themestr = sthemepick.split(' ');
+for(var j = 0; j < themestr.length; j++) {
+sthemecurr.classList.add(themestr[j]);
+}                                     
 sthemecurr.removeAttribute('theme');}
 
 const spush = hexxer.querySelectorAll('[push]');
