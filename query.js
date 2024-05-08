@@ -87,7 +87,11 @@ query = document.getElementById(data);
 if(query) {
 let db = query.getAttribute('data');
 let called = query.getAttribute('call');
-
+let terror = null; 
+let qerr = query.getAttribute('error'); 
+if(qerr == null) {} else {
+terror = qerr; 
+}
 if(called == null) {
 call = "";
 } else {
@@ -182,7 +186,12 @@ let path = xqlget+"?key="+xqlacc+"&tab="+dataSelector+"&row="+db+"&sess="+makeid
 
 
 
-fetch(path).then(function(response) { response.text().then(function(text) {
+fetch(path).then(function(response) { 
+if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.text();    
+}).then(function(text) {
 
 let data = text;
 if(data == "") {
@@ -493,7 +502,12 @@ console.log(`XQL QUERIED: ${roundExTime} milliseconds`);
 }
 
 
-}); });
+}).catch(function(error) {
+console.error(error); 
+if(terror == null) {} else {
+eval(terror); 
+}
+});
 
 }
 else {
@@ -530,8 +544,12 @@ let path = xqlget+"?key="+xqlacc+"&tab="+dataSelector+"&row="+db+"&sess="+makeid
 
 
 
-fetch(path).then(function(response) { response.text().then(function(text) {
-
+fetch(path).then(function(response) { 
+if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.text();    
+}).then(function(text) {
 let data = text;
 
 if(data == "") {
@@ -836,7 +854,12 @@ console.log(`XQL COMPILED: ${roundExTime} milliseconds`);
 
 
 }
-}); });
+}).catch(function(error) {
+console.error(error); 
+if(terror == null) {} else {
+eval(terror); 
+}
+});
 
 }
 else { 
