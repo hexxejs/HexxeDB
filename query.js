@@ -358,6 +358,9 @@ if(result == "null"  || result === null || result === undefined || result == "")
 
 result = "";
 }
+if(tobr ==  "true"){
+result = $nl2br(result); 
+}
 return result;
 });
 
@@ -473,9 +476,7 @@ if(selectedData.length < 1) {
 thisVal = emptyval;
 }
 
-if(tobr ==  "true"){
-thisVal = $nl2br(thisVal); 
-}
+
 
 if(origin !== undefined) { 
 let oridata = document.querySelector(origin);
@@ -738,8 +739,11 @@ if(result == "null"  || result === null || result === undefined || result == "")
     
 result = "";
 }
-
+if(tobr ==  "true"){
+result = $nl2br(result); 
+}
 return result;
+    
 });
 
 
@@ -841,9 +845,7 @@ if(selectedData.length < 1) {
 addVal = emptyval; 
 }
 
-    if(tobr ==  "true"){
-addVal = $nl2br(addVal); 
-    }
+    
     
 if(origin !== undefined) { 
 let oridata = document.querySelector(origin); 
