@@ -86,6 +86,10 @@ let query;
 query = document.getElementById(data);
 if(query) {
 let db = query.getAttribute('data');
+let tobr = query.getAttribute('nl2br');
+if(tobr !== "true"){
+tobr = "false"; 
+}
 let called = query.getAttribute('call');
 let terror = null; 
 let qerr = query.getAttribute('error'); 
@@ -469,7 +473,9 @@ if(selectedData.length < 1) {
 thisVal = emptyval;
 }
 
-
+if(tobr ==  "true"){
+thisVal = $nl2br(thisVal); 
+}
 
 if(origin !== undefined) { 
 let oridata = document.querySelector(origin);
@@ -834,6 +840,11 @@ addVal = addVal + thisVal;
 if(selectedData.length < 1) {
 addVal = emptyval; 
 }
+
+    if(tobr ==  "true"){
+addVal = $nl2br(addVal); 
+    }
+    
 if(origin !== undefined) { 
 let oridata = document.querySelector(origin); 
 
