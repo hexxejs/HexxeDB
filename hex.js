@@ -999,6 +999,7 @@ qin.forEach(function(ins){
 let db = ins.getAttribute('data');
 let table = ins.getAttribute('table');
 let call = ins.getAttribute('call'); 
+let terr = ins.getAttribute('error'); 
 let insert = ins.getAttribute('insert');
 let pjs = ins.getAttribute('parsejs');
 if(call == null) {
@@ -1069,6 +1070,14 @@ resolve();
             }
           }
         };
+mri.onerror = () => {
+if(terr){
+eval(terr); 
+}
+  console.error("An error occurred while uploading the file.");  
+};
+
+ 
 mri.send(formData);
       });
 filePromises.push(filePromise);
@@ -1200,12 +1209,12 @@ elem.value = "";
 }        
 }   
 
-$INSERT(db, "INSERT "+table+" FIELDS("+fields.join(',')+") VALUES("+values.join(',')+")", call);
+$INSERT(db, "INSERT "+table+" FIELDS("+fields.join(',')+") VALUES("+values.join(',')+")", call, terr);
 
 if(insert !== null) {
 
     
-$INSERT(db, "INSERT "+insert+" FIELDS("+fields.join(',')+") VALUES("+values.join(',')+")", call);
+$INSERT(db, "INSERT "+insert+" FIELDS("+fields.join(',')+") VALUES("+values.join(',')+")", call, terr);
 
 
     
@@ -1244,6 +1253,7 @@ let db = ins.getAttribute('data');
 let table = ins.getAttribute('table');
 let insert = ins.getAttribute('insert'); 
 let call = ins.getAttribute('call'); 
+let terr = ins.getAttribute('error'); 
 let killer = ins.getAttribute("error"); 
 let pjs = ins.getAttribute('parsejs');
 if(call == null || call == undefined) {
@@ -1310,6 +1320,14 @@ resolve();
             }
           }
         };
+
+mri.onerror = () => {
+if(terr){
+eval(terr); 
+}
+  console.error("An error occurred while uploading the file.");  
+};
+ 
 mri.send(formData);
       });
 filePromises.push(filePromise);
