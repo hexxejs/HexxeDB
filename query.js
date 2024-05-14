@@ -314,6 +314,7 @@ if(string.includes("ORDER")) {
 const orpA = string.match(/ORDER (\w+)/); 
 if(orpA)  {
 orpVal = orpA[1]; 
+if(orpVal){
 if(orpVal == "DESC") {
 let oneDex = selectedData.length - 1;
 thedex = oneDex;
@@ -357,9 +358,17 @@ return result;
 });
 
     
-} else {
-upsQ();     
 }
+
+if(orpVal.includes("RAND")) {
+
+if(typeof $shuffle === 'function'){
+selectedData = $shuffle(selectedData); 
+}
+ascQ(); 
+}
+    
+} else { upsQ(); }
 } else {
  upsQ();   
 }
@@ -637,7 +646,7 @@ if(string.includes("ORDER")) {
 const orA = string.match(/ORDER (\S+)/); 
 if(orA)  {
 orVal = orA[1]; 
-
+if(orVal){
 if(orVal.includes("DESC")) {
 selectedData = selectedData.slice().reverse();
 const order = orVal.split("-").pop();
@@ -647,7 +656,8 @@ ascQ(order)
 } else {
 ascQ()
 }
-} else if(orVal.includes("ASC")){ 
+} 
+if(orVal.includes("ASC")){ 
   
 const order = orVal.split("-").pop();
 if(order !== "ASC") {
@@ -661,6 +671,14 @@ ascQ()
     
 }
 
+
+if(orVal.includes("RAND")) {
+if(typeof $shuffle === 'function'){
+selectedData = $shuffle(selectedData); 
+}
+ascQ(); 
+}
+} else { ascQ(); }
 } else { 
 
 ascQ(); 
