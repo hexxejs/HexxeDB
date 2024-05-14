@@ -308,6 +308,11 @@ else { result = ""; }}
 if(result == "null"  || result === null || result === undefined || result == "") {
 result = "";
 }
+
+if(tobr ==  "true"){
+result = $nl2br(result); 
+}
+
 return result;
 });
 
