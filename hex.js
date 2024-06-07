@@ -2175,6 +2175,12 @@ newRoute = baseurl + url;
 if(newRoute.includes("@")) {
 newRoute = baseurl;     
 }
+
+url = new URL(window.location.href);
+const params = new URLSearchParams(url.search);
+params.set(ruClass, obj);
+url = `${url.pathname}?${params.toString()}`;
+ 
 console.log(new Error().stack.split('\n')[2].trim() + ` Go to: ${url}`);
 if(oldRoute == newRoute) {
 console.log(` Reload Path: ${obj}`) 
