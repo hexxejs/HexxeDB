@@ -1633,8 +1633,8 @@ var bundle = src.split('@').pop();
 if(bundle == "UI") {
 
 rootHex();
-xui = "yes"; 
-
+xui = "yes";
+setInterval(rootHex, 100);
 }
 if(bundle == "events") {
 let startTime = performance.now();
@@ -1646,9 +1646,11 @@ const roundExTime = executionTime.toFixed(2);
 xlogs.push(`EVENTS LOADED: ${roundExTime} milliseconds`);
 }
 } else {
-var data = src.split(':').map(item => item.trim());
-var moduleName = data[0]; 
-var modulePath = data[1]; 
+let data = src.split(':');
+let moduleName = data[0]; 
+moduleName = moduleName.trim(); 
+let modulePath = data[1];
+modulePath = modulePath.trim(); 
 const routeRec = { name: moduleName, path: modulePath };
 xrouter.push(routeRec);
 xlogs.push(new Error().stack.split('\n')[2].trim() + ` Imported ${moduleName} from '${modulePath}'`)
@@ -3041,7 +3043,8 @@ logbut.style.fontSize = '17px';
 logbut.innerText = 'GET LOGS';
 logbut.style.fontWeight = '650';
 logbut.style.padding = '5px 12px'; 
-
+logbut.id = logEle.id;
+logbut.setAttribute('class', logEle.getAttribute('class')); 
 logbut.addEventListener("click", function() {
 
 let log = "";
