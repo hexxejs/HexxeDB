@@ -3733,8 +3733,7 @@ typeElement.appendChild(blinkerElement);
 
 
 
-
- const shide = hexxer.getElementsByTagName('*'); for(var i = 0; i < shide.length;i++) {const hides = shide[i];const hashide = hasAttr(hides, 'hidden');if(hashide == true){hides.style.display = 'none';}}
+const shide = hexxer.getElementsByTagName('*'); for(var i = 0; i < shide.length;i++) {const hides = shide[i];const hashide = hasAttr(hides, 'hidden');if(hashide == true){hides.style.display = 'none'; hides.removeAttribute('hidden');}}
  
     
 
