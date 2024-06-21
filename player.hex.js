@@ -1,10 +1,11 @@
+function newAud() {
 const playhex = document.getElementsByTagName('player')[0];
 const parentHexOr = playhex.parentElement; 
 parentHexOr.style.position = "relative";
 const parentHex = document.createElement("player");
 parentHex.id = "parent-hex"; 
 parentHexOr.appendChild(parentHex);
-function newAud() {
+   
 if(playhex) {
 const ifalbum = playhex.getAttribute("page");
 const albumpage = document.createElement("div");
